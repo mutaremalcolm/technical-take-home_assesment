@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react";
+import IdeaCard from "@/components/IdeaCard";
 
 import {NextUIProvider} from "@nextui-org/react";
 import { 
@@ -19,7 +20,7 @@ export default function Home() {
     <>
     <NextUIProvider>
       <Navigation/>
-      
+      <IdeaCard idea={undefined}/>
       
     </NextUIProvider>
 
