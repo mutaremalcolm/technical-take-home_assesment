@@ -7,7 +7,7 @@ interface Idea {
   description: string;
   createdTime: string;
   updatedTime: string;
-  // Add other properties as needed
+  content: string;
 }
 
 interface IdeaCardProps {
@@ -19,6 +19,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete }) => {
   const [isEditing, setEditing] = useState(true);
   const [editedTitle, setEditedTitle] = useState(idea?.title || '');
   const [editedDescription, setEditedDescription] = useState(idea?.description || '');
+  const [editedContent, setEditedContent] = useState(idea?.content)
 
   const handleSaveClick = () => {
     // Implement your save logic here
@@ -27,7 +28,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete }) => {
   };
 
   return (
-    <div className="relative bg-white rounded-lg shadow-lg p-4 mb-4 w-1/4">
+    <div className="relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4">
       <button
         onClick={onDelete}
         className="absolute top-0 right-0 p-2 cursor-pointer text-red-500"
@@ -46,13 +47,19 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete }) => {
           value={editedDescription}
           onChange={(e) => setEditedDescription(e.target.value)}
           className="resize-none focus:outline-none focus:shadow-outline w-full"
-          placeholder="Enter description..."
+          placeholder="Idea description..."
+        />
+        <textarea
+          value={editedContent}
+          onChange={(e) => setEditedContent(e.target.value)}
+          className="resize-none focus:outline-none focus:shadow-outline w-full"
+          placeholder="Enter your ideas here..."
         />
       </div>
 
       <div className="flex justify-between items-center mt-4">
         <p className="text-gray-500 text-sm">
-          Created: idea.createdTime | Updated: idea.updatedTime
+          Created: {idea.createdTime} | Updated: {idea.updatedTime}
         </p>
         <button
           onClick={handleSaveClick}
