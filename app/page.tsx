@@ -38,13 +38,15 @@ useEffect(() => {
 
 
 const handleAddNewCard = () => {
-  // Create a new card 
+  const currentDate = new Date();
+
+
   const newCard : Idea = {
     uuid: uuidv4(),
     title: '',
     description: '',
-    createdTime: new Date('new time'),
-    updatedTime: new Date('new time'),
+    createdTime: currentDate,
+    updatedTime: currentDate,
     content: ''
   };
 
@@ -67,10 +69,22 @@ const handleDelete = (index: number) => {
 };
 
 const handleSortByCreatedTime = () => {
-  const sortedIdeas = [...ideas].sort((a, b) => new Date(a.createdTime).getTime() - new Date(b.createdTime).getTime());
+  const sortedIdeas = [...ideas].sort(
+    (a, b) => new Date(a.createdTime).getTime() - new Date(b.createdTime).getTime()
+  );
   setIdeas(sortedIdeas);
-  sortIdeas();
 };
+
+const handleSortByTitle = () => {
+  const sortedIdeas = [...ideas].sort((a, b) => a.title.localeCompare(b.title));
+  setIdeas(sortedIdeas);
+};
+
+const handleSortByTitleReverse = () => {
+  const sortedIdeas = [...ideas].sort((a, b) => b.title.localeCompare(a.title));
+  setIdeas(sortedIdeas);
+};
+
 
 const handleClearIdeas = () => {
   setIdeas([]);
@@ -83,16 +97,27 @@ const handleClearIdeas = () => {
       <Navigation onAddNewCard={handleAddNewCard} />
       <header className="flex flex-col items-center">
         <div className="flex">
-          <button onClick={handleSortByCreatedTime} 
-          className="bg-blue-500 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
+        <button onClick={handleSortByCreatedTime} 
+          className="bg-orange-500 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
          hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center">
-          Sort Ideas
+          Sort Date
+        </button>
+        <button onClick={handleSortByTitle} 
+          className="bg-green-500 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
+         hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center">
+          Sort A-Z
+        </button>
+          <button onClick={handleSortByTitleReverse} 
+          className="bg-blue-500 text-white p-2 mb-2 rounded text-sm mt-4  ml-3 font-bold
+         hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center">
+           Sort Z-A
         </button>
         <button
           onClick={handleClearIdeas}
-          className="bg-red-500 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold hover:bg-gray-600 focus:outline-none focus:shadow-outline justify-center"
+          className="bg-red-500 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
+           hover:bg-gray-600 focus:outline-none focus:shadow-outline justify-center"
         >
-          Clear Ideas
+          Delete All
         </button>
         </div>
       </header>
