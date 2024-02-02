@@ -1,8 +1,8 @@
 export interface Idea {
-    //uuid: number; //add uuid solution
+    uuid: string; 
     title: string;
     description: string;
-    createdTime: string;  //date change type 
-    updatedTime: string;  //date change type
+    createdTime: Date;  
+    updatedTime: Date;  
     content: string;  
   }

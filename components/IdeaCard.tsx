@@ -3,6 +3,8 @@
 import { Idea } from '@/lib/types';
 import { useState } from 'react';
 
+import { v4 as uuidv4 } from 'uuid';
+
 // 🎯 to-do-list FUTURE 
 // react hook forms
 // zod validation 
@@ -22,10 +24,11 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   const handleSaveClick = () => {
     const updatedIdea: Idea = {
       ...idea,
+      uuid: uuidv4(),
       title: editedTitle,
       description: editedDescription,
       content: editedContent,
-      updatedTime: new Date().toLocaleString(), // Update the updatedTime
+      updatedTime: new Date(), // Update the updatedTime
   };
 
     onSave(updatedIdea);
@@ -64,7 +67,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
       </div>
       <div className="flex justify-between items-center mt-4">
         <p className="text-gray-500 text-sm">
-          Created: {idea.createdTime} | Updated: {idea.updatedTime}
+          Created: {idea.createdTime.toLocaleString()} | Updated: {idea.updatedTime.toLocaleString()}
         </p>
         {isEditing ? (
         <button
