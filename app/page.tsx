@@ -1,22 +1,17 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { Idea } from '@/lib/types';
+import { v4 as uuidv4 } from 'uuid';
+
 import Navigation from '@/components/Navbar';
 import IdeaCard from '@/components/IdeaCard';
-import { Idea } from '@/lib/types';
+
 
 
 export default function Home() {
-  //refactor ✔
   const [ideas, setIdeas] = useState<Idea[]>([]);
     
-//     () => {
-//     // Load ideas from local storage or use default values
-//     const storedIdeas = localStorage.getItem('ideas');
-//     return storedIdeas ? JSON.parse(storedIdeas) : defaultIdeas;
-// });
-
-
 // reading-local storage 
 useEffect(() => {
   const savedIdeas = localStorage.getItem('ideas');
@@ -35,39 +30,19 @@ useEffect(() => {
 }, [ideas]);
 
 
-//🎯 remove all this - another way to do this (form onFocus)
-// const titleInputRef = useRef<HTMLInputElement>(null);
-
-// useEffect(() => {
-//   // Focus on the title input when a new card is created
-//   if (titleInputRef.current) {
-//     titleInputRef.current.focus();
-//   }
-// }, [ideas]); // Trigger the effect when ideas change
-
-// setTimeout(() => {
-//   if (titleInputRef.current) {
-//     titleInputRef.current.focus();
-//   }
-// }, 0);
-
-
 const handleAddNewCard = () => {
   // Create a new card 
   const newCard : Idea = {
+    uuid: uuidv4(),
     title: '',
     description: '',
-    createdTime: 'new time',
-    updatedTime: 'new time',
+    createdTime: new Date('new time'),
+    updatedTime: new Date('new time'),
     content: ''
   };
 
   // Add the new card to the existing ideas
-  console.log('🎯this is my ideas', ideas)
-  console.log('🎯this is my newCard', newCard)
   setIdeas([...ideas, newCard]);
-
-  console.log("Created a new card in local state")
 };
 
 const handleSave = (updatedIdea: Idea, index: number) => {
