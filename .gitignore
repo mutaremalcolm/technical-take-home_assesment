@@ -9,3 +9,5 @@ build/
 *.log
 webpack-debug.log
 webpack.config.js
+
+.next
