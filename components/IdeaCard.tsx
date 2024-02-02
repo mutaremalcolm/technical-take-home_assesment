@@ -2,8 +2,8 @@
 
 import { Idea } from '@/lib/types';
 import { useState } from 'react';
-
 import { v4 as uuidv4 } from 'uuid';
+
 
 // 🎯 to-do-list FUTURE 
 // react hook forms
@@ -13,9 +13,10 @@ interface IdeaCardProps {
   idea: Idea;
   onDelete: () => void; // Function to handle deletion
   onSave: (updatedIdea: Idea) => void;
+  cardSaved: () => void;
 }
 
-const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
+const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave, cardSaved }) => {
   const [isEditing, setEditing] = useState(true);
   const [editedTitle, setEditedTitle] = useState(idea?.title || '');
   const [editedDescription, setEditedDescription] = useState(idea?.description || '');
@@ -33,6 +34,8 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
 
     onSave(updatedIdea);
     setEditing(false);
+
+    cardSaved()
   };
 
   return (
@@ -67,7 +70,8 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
       </div>
       <div className="flex justify-between items-center mt-4">
         <p className="text-gray-500 text-sm">
-          Created: {idea.createdTime.toLocaleString()} | Updated: {idea.updatedTime.toLocaleString()}
+          Created: {idea.createdTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'} 
+          | Updated: {idea.updatedTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'}
         </p>
         {isEditing ? (
         <button
@@ -78,7 +82,10 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         </button>
         ) : (
           <button
-            onClick={() => setEditing(true)}
+          onClick={() => {
+            handleSaveClick();
+            cardSaved();
+          }}
             className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 focus:outline-none focus:shadow-outline"
           >
             Edit
