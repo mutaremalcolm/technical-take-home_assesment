@@ -1,14 +1,11 @@
+'use client';
 
-
+import { Idea } from '@/lib/types';
 import { useState } from 'react';
 
-interface Idea {
-  title: string;
-  description: string;
-  createdTime: string;
-  updatedTime: string;
-  content: string;
-}
+// 🎯 to-do-list FUTURE 
+// react hook forms
+// zod validation 
 
 interface IdeaCardProps {
   idea: Idea;
@@ -50,6 +47,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
           onChange={(e) => setEditedTitle(e.target.value)}
           className="font-bold text-lg mb-2 focus:outline-none focus:shadow-outline border-b-2 border-blue-500 w-full"
           placeholder="Enter title..."
+          autoFocus
         />
         <textarea
           value={editedDescription}

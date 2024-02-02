@@ -1,97 +1,101 @@
-"use client"
+'use client';
 
-import IdeaCard from '@/components/IdeaCard';
 import React, { useState, useEffect, useRef } from 'react';
 import Navigation from '@/components/Navbar';
+import IdeaCard from '@/components/IdeaCard';
+import { Idea } from '@/lib/types';
 
-interface Idea {
-  title: string;
-  description: string;
-  createdTime: string;
-  updatedTime: string;
-  content: string;
-}
 
 export default function Home() {
-  const defaultIdeas = [
-    { title: 'Idea 1', description: 'Description 1', createdTime: 'time1', updatedTime: 'time1', content:'Type your content here' },
-    { title: 'Idea 2', description: 'Description 2', createdTime: 'time2', updatedTime: 'time2', content:'Type your content here' },
-    { title: 'Idea 3', description: 'Description 3', createdTime: 'time3', updatedTime: 'time3', content:'Type your content here' },
-  ];
-
-  
-  const [ideas, setIdeas] = useState(()=> {
-    // Load ideas from local storage or use default values
-    const storedIdeas = localStorage.getItem('ideas');
-    return storedIdeas ? JSON.parse(storedIdeas) : defaultIdeas;
-});
-
-  const handleDelete = (index: number) => {
-    const newIdeas = [...ideas];
-    newIdeas.splice(index, 1);
-    setIdeas(newIdeas);
-  };
-
-  const handleAddNewCard = () => {
-    // Create a new card 
-    const newCard = {
-      title: 'New Idea',
-      description: 'New Description',
-      createdTime: 'new time',
-      updatedTime: 'new time',
-      content: "Type your ideas here"
-    };
-
-    // Add the new card to the existing ideas
-    setIdeas([...ideas, newCard]);
-  };
-
-  setTimeout(() => {
-    if (titleInputRef.current) {
-      titleInputRef.current.focus();
-    }
-  }, 0);
+  //refactor ✔
+  const [ideas, setIdeas] = useState<Idea[]>([]);
+    
+//     () => {
+//     // Load ideas from local storage or use default values
+//     const storedIdeas = localStorage.getItem('ideas');
+//     return storedIdeas ? JSON.parse(storedIdeas) : defaultIdeas;
+// });
 
 
-  const handleSave = (updatedIdea: Idea, index: number) => {
-    const newIdeas = [...ideas];
-    newIdeas[index] = updatedIdea;
-    setIdeas(newIdeas);
-  };
+// reading-local storage 
+useEffect(() => {
+  const savedIdeas = localStorage.getItem('ideas');
+  if (savedIdeas) {
+    setIdeas(JSON.parse(savedIdeas))
+    console.log('fetching data from localStorage', JSON.parse(savedIdeas))
+  }
+}, [setIdeas])
 
-  const handleSortByCreatedTime = () => {
-    const sortedIdeas = [...ideas].sort((a, b) => new Date(a.createdTime).getTime() - new Date(b.createdTime).getTime());
-    setIdeas(sortedIdeas);
-  };
-
-  const handleClearIdeas = () => {
-    // Clear all ideas
-    setIdeas([]);
-  };
-
-  useEffect(() => {
-    // Save ideas to local storage whenever it changes
+// setting-local storage
+useEffect(() => {
+  if (ideas.length > 0) {
     localStorage.setItem('ideas', JSON.stringify(ideas));
-  }, [ideas]);
-
-  const titleInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    // Focus on the title input when a new card is created
-    if (titleInputRef.current) {
-      titleInputRef.current.focus();
-    }
-  }, [ideas]); // Trigger the effect when ideas change
+    console.log("setting local storage," , JSON.stringify(ideas))
+  }
+}, [ideas]);
 
 
+//🎯 remove all this - another way to do this (form onFocus)
+// const titleInputRef = useRef<HTMLInputElement>(null);
+
+// useEffect(() => {
+//   // Focus on the title input when a new card is created
+//   if (titleInputRef.current) {
+//     titleInputRef.current.focus();
+//   }
+// }, [ideas]); // Trigger the effect when ideas change
+
+// setTimeout(() => {
+//   if (titleInputRef.current) {
+//     titleInputRef.current.focus();
+//   }
+// }, 0);
+
+
+const handleAddNewCard = () => {
+  // Create a new card 
+  const newCard : Idea = {
+    title: '',
+    description: '',
+    createdTime: 'new time',
+    updatedTime: 'new time',
+    content: ''
+  };
+
+  // Add the new card to the existing ideas
+  console.log('🎯this is my ideas', ideas)
+  console.log('🎯this is my newCard', newCard)
+  setIdeas([...ideas, newCard]);
+
+  console.log("Created a new card in local state")
+};
+
+const handleSave = (updatedIdea: Idea, index: number) => {
+  const newIdeas = [...ideas];
+  newIdeas[index] = updatedIdea;
+  setIdeas(newIdeas);
+};
+
+const handleDelete = (index: number) => {
+  const newIdeas = [...ideas];
+  newIdeas.splice(index, 1);
+  setIdeas(newIdeas);
+};
+
+const handleSortByCreatedTime = () => {
+  const sortedIdeas = [...ideas].sort((a, b) => new Date(a.createdTime).getTime() - new Date(b.createdTime).getTime());
+  setIdeas(sortedIdeas);
+};
+
+const handleClearIdeas = () => setIdeas([]);
 
   return (
     <>
       <Navigation onAddNewCard={handleAddNewCard} />
-      <div className="flex flex-col items-center">
+      <header className="flex flex-col items-center">
         <div className="flex">
           <button onClick={handleSortByCreatedTime} 
-          className="bg-blue-300 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
+          className="bg-blue-500 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
          hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center">
           Sort Ideas
         </button>
@@ -102,14 +106,14 @@ export default function Home() {
           Clear Ideas
         </button>
         </div>
-        </div>
-      <div className="flex flex-wrap justify-around">
+      </header>
+      <main className="flex flex-wrap justify-around">
         {ideas.map((idea: Idea, index: number) => (
           <IdeaCard key={index} idea={idea} onDelete={() => handleDelete(index)} onSave={(updatedIdea: Idea) => handleSave(updatedIdea, index)} />
         ))}
-      </div>
+      </main>
       {/* hidden input for focusing */}
-      <input type="text" style={{ opacity: 0, position: 'absolute', zIndex: -1 }} ref={titleInputRef} />
+      <input type="text" style={{ opacity: 0, position: 'absolute', zIndex: -1 }} />
     </>
   );
 }

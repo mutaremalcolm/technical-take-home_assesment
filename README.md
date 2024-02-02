@@ -38,4 +38,5 @@ I welcome contributions! If you have ideas for improvements or new features, fee
 ## License
 This project is part of a technical take-home assessment and is licensed under the [MIT License](LICENSE).
 
+
 Happy ideating with ThinkPad! 🚀
