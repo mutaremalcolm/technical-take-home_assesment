@@ -1,1 +1,11 @@
-node_modules
+# Node.js
+node_modules/
+
+# Build files
+dist/
+build/
+
+# Webpack
+*.log
+webpack-debug.log
+webpack.config.js
