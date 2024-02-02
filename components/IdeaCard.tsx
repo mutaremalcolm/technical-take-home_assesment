@@ -13,18 +13,26 @@ interface Idea {
 interface IdeaCardProps {
   idea: Idea;
   onDelete: () => void; // Function to handle deletion
+  onSave: (updatedIdea: Idea) => void;
 }
 
-const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete }) => {
+const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   const [isEditing, setEditing] = useState(true);
   const [editedTitle, setEditedTitle] = useState(idea?.title || '');
   const [editedDescription, setEditedDescription] = useState(idea?.description || '');
   const [editedContent, setEditedContent] = useState(idea?.content)
 
   const handleSaveClick = () => {
-    // Implement your save logic here
+    const updatedIdea: Idea = {
+      ...idea,
+      title: editedTitle,
+      description: editedDescription,
+      content: editedContent,
+      updatedTime: new Date().toLocaleString(), // Update the updatedTime
+  };
+
+    onSave(updatedIdea);
     setEditing(false);
-    // You can dispatch an action to update the idea with the editedTitle and editedDescription
   };
 
   return (
@@ -56,20 +64,30 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete }) => {
           placeholder="Enter your ideas here..."
         />
       </div>
-
       <div className="flex justify-between items-center mt-4">
         <p className="text-gray-500 text-sm">
           Created: {idea.createdTime} | Updated: {idea.updatedTime}
         </p>
+        {isEditing ? (
         <button
           onClick={handleSaveClick}
           className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
         >
           Save
         </button>
+        ) : (
+          <button
+            onClick={() => setEditing(true)}
+            className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 focus:outline-none focus:shadow-outline"
+          >
+            Edit
+          </button>
+        )}
       </div>
     </div>
   );
 };
 
 export default IdeaCard;
+
+
