@@ -3,10 +3,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Idea } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 import Navigation from '@/components/Navbar';
 import IdeaCard from '@/components/IdeaCard';
 
+
+const cardSaved = () => toast('Th!nkPad saved');
+const ideasCleared = () => toast('ThinkPad cleared');
+const sortIdeas = () => toast('Th!nkPads Sorted');
+const deleteIdeas = () => toast('Th!nkPads Deleted');
 
 
 export default function Home() {
@@ -55,14 +62,21 @@ const handleDelete = (index: number) => {
   const newIdeas = [...ideas];
   newIdeas.splice(index, 1);
   setIdeas(newIdeas);
+  localStorage.removeItem('ideas');
+  deleteIdeas();
 };
 
 const handleSortByCreatedTime = () => {
   const sortedIdeas = [...ideas].sort((a, b) => new Date(a.createdTime).getTime() - new Date(b.createdTime).getTime());
   setIdeas(sortedIdeas);
+  sortIdeas();
 };
 
-const handleClearIdeas = () => setIdeas([]);
+const handleClearIdeas = () => {
+  setIdeas([]);
+  localStorage.removeItem('ideas');
+  ideasCleared();
+};
 
   return (
     <>
@@ -84,11 +98,14 @@ const handleClearIdeas = () => setIdeas([]);
       </header>
       <main className="flex flex-wrap justify-around">
         {ideas.map((idea: Idea, index: number) => (
-          <IdeaCard key={index} idea={idea} onDelete={() => handleDelete(index)} onSave={(updatedIdea: Idea) => handleSave(updatedIdea, index)} />
+          <IdeaCard key={index} idea={idea} onDelete={() => handleDelete(index)} 
+          onSave={(updatedIdea: Idea) => handleSave(updatedIdea, index)} 
+          cardSaved={cardSaved}/>
         ))}
       </main>
       {/* hidden input for focusing */}
       <input type="text" style={{ opacity: 0, position: 'absolute', zIndex: -1 }} />
+      <Toaster />
     </>
   );
 }
