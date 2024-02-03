@@ -3,11 +3,21 @@
 import { Idea } from '@/lib/types';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { z } from 'zod';
 
 
 // 🎯 to-do-list FUTURE 
 // react hook forms
 // zod validation 
+
+const IdeaSchema = z.object({
+  uuid: z.string(),
+  title: z.string().min(1), 
+  description: z.string(),
+  createdTime: z.date(),
+  updatedTime: z.date(),
+  content: z.string(),
+});
 
 interface IdeaCardProps {
   idea: Idea;
@@ -23,20 +33,27 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave, cardSaved }
   const [editedContent, setEditedContent] = useState(idea?.content)
 
   const handleSaveClick = () => {
-    const updatedIdea: Idea = {
+    try {
+    const updatedIdea: Idea = IdeaSchema.parse ({
       ...idea,
       uuid: uuidv4(),
       title: editedTitle,
       description: editedDescription,
       content: editedContent,
       updatedTime: new Date(), // Update the updatedTime
-  };
+  });
 
     onSave(updatedIdea);
     setEditing(false);
-
     cardSaved()
-  };
+  } catch (error){
+    if (error instanceof z.ZodError) {
+      console.error('Validation error:', error.errors);
+    }else {
+    console.error('Unexpected error:', error);
+    }
+  }
+};
 
   return (
     <div className="relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4">
@@ -95,6 +112,8 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave, cardSaved }
     </div>
   );
 };
+
+
 
 export default IdeaCard;
 

@@ -1,13 +1,16 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
 import { Idea } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
 import toast, { Toaster } from 'react-hot-toast';
+import React, { useState, useEffect, useRef } from 'react';
+
 
 
 import Navigation from '@/components/Navbar';
 import IdeaCard from '@/components/IdeaCard';
+
+
 
 
 const cardSaved = () => toast('Th!nkPad saved');
@@ -137,4 +140,5 @@ const handleClearIdeas = () => {
     </>
   );
 }
+
 
