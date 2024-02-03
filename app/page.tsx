@@ -73,16 +73,19 @@ const handleSortByCreatedTime = () => {
     (a, b) => new Date(a.createdTime).getTime() - new Date(b.createdTime).getTime()
   );
   setIdeas(sortedIdeas);
+  sortIdeas()
 };
 
 const handleSortByTitle = () => {
   const sortedIdeas = [...ideas].sort((a, b) => a.title.localeCompare(b.title));
   setIdeas(sortedIdeas);
+  sortIdeas()
 };
 
 const handleSortByTitleReverse = () => {
   const sortedIdeas = [...ideas].sort((a, b) => b.title.localeCompare(a.title));
   setIdeas(sortedIdeas);
+  sortIdeas()
 };
 
 
@@ -100,7 +103,7 @@ const handleClearIdeas = () => {
         <button onClick={handleSortByCreatedTime} 
           className="bg-orange-500 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
          hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center">
-          Sort Date
+          Sort By Date
         </button>
         <button onClick={handleSortByTitle} 
           className="bg-green-500 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
@@ -123,7 +126,7 @@ const handleClearIdeas = () => {
       </header>
       <main className="flex flex-wrap justify-around">
         {ideas.map((idea: Idea, index: number) => (
-          <IdeaCard key={index} idea={idea} onDelete={() => handleDelete(index)} 
+          <IdeaCard key={idea.uuid} idea={idea} onDelete={() => handleDelete(index)} 
           onSave={(updatedIdea: Idea) => handleSave(updatedIdea, index)} 
           cardSaved={cardSaved}/>
         ))}
