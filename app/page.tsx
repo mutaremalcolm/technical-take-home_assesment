@@ -98,13 +98,53 @@ const handleClearIdeas = () => {
   ideasCleared();
 };
 
+
+const handleSampleIdeas = () => {
+  const currentDate = new Date();
+
+  const sampleIdeas: Idea[] = [
+    {
+      uuid: uuidv4(),
+      title: 'Study Plan',
+      description: 'This is a how i plan to study for exams.',
+      createdTime: currentDate,
+      updatedTime: currentDate,
+      content: '1. Pomodore technique...',
+    },
+    {
+      uuid: uuidv4(),
+      title: 'Workout Plan',
+      description: 'This is how i will work-out',
+      createdTime: currentDate,
+      updatedTime: currentDate,
+      content: 'Push Pull Legs Split',
+    },
+    {
+      uuid: uuidv4(),
+      title: 'Holiday Bucket-List',
+      description: 'These are the items i will do on holiday',
+      createdTime: currentDate,
+      updatedTime: currentDate,
+      content: 'Hike Lions Head',
+    },
+  ];
+
+  setIdeas([...ideas, ...sampleIdeas]);
+  localStorage.setItem('ideas', JSON.stringify([...ideas, ...sampleIdeas]));
+};
+
   return (
     <>
       <Navigation onAddNewCard={handleAddNewCard} />
       <header className="flex flex-col items-center">
         <div className="flex">
+        <button onClick={handleSampleIdeas} 
+          className="bg-purple-500 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
+         hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center">
+          Sample Ideas
+        </button>
         <button onClick={handleSortByCreatedTime} 
-          className="bg-orange-500 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
+          className="bg-orange-500 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
          hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center">
           Sort By Date
         </button>

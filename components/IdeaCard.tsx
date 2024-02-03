@@ -58,8 +58,8 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave, cardSaved }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4">
+      
+      <div onSubmit={handleSubmit(onSubmit)} className="relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4">
         <button
           onClick={onDelete}
           className="absolute top-0 right-0 p-2 cursor-pointer text-red-500"
@@ -102,7 +102,6 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave, cardSaved }
           </button>
         </div>
       </div>
-    </form>
   );
 };
 
