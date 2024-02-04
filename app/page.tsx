@@ -22,7 +22,7 @@ const deleteIdeas = () => toast('🗑️ Delete Successful');
 export default function Home() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
     
-// reading-local storage 
+ 
 useEffect(() => {
   const savedIdeas = localStorage.getItem('ideas');
   if (savedIdeas) {
@@ -31,7 +31,7 @@ useEffect(() => {
   }
 }, [setIdeas])
 
-// setting-local storage
+
 useEffect(() => {
   if (ideas.length > 0) {
     localStorage.setItem('ideas', JSON.stringify(ideas));
@@ -53,7 +53,7 @@ const handleAddNewCard = () => {
     content: ''
   };
 
-  // Add the new card to the existing ideas
+  
   setIdeas([...ideas, newCard]);
 };
 
@@ -175,7 +175,6 @@ const handleSampleIdeas = () => {
           cardSaved={cardSaved}/>
         ))}
       </main>
-      {/* hidden input for focusing */}
       <input type="text" style={{ opacity: 0, position: 'absolute', zIndex: -1 }} />
       <Toaster />
     </>

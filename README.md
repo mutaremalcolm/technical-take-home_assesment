@@ -1,41 +1,37 @@
-# ThinkPad - Your Idea Management App 🚀
+<div align="center">
+  <h1>ThinkPad - Your Idea Management App 🚀</h1>
+  <p>Welcome to ThinkPad, my solution for the technical take-home assessment – a powerful application to help you manage and organize your brilliant ideas!</p>
+  <p>🔗 [Live Demo](https://technical-take-home-assesment.vercel.app/)</p>
 
-Welcome to ThinkPad, my solution for the technical take-home assessment – a powerful application to help you manage and organize your brilliant ideas!
 
 ## Features
 
-### 1. Responsive Design
-ThinkPad is designed to seamlessly adapt to different screen sizes, ensuring a smooth experience across devices.
+- **Fully Responsive:**
+   Page is designed to be fully responsive on various devices.
 
-### 2. Idea Tiles
-- Each idea tile contains a title and description, both of which are fully editable.
-- When creating new ideas, the title field is focused, prompting you to start typing right away.
-- The creation and last updated timestamps are displayed for each idea tile.
+- **Editable Idea Tiles:**
+   Each idea tile contains a title and description that are editable.
+   Created/updated time is also displayed.
 
-### 3. Sorting Functionality
-- You can sort your ideas by either creation date or alphabetically.
-- Simply use the provided buttons or dropdowns to organize your thoughts effortlessly.
+- **Focused Title for New Ideas:**
+   New ideas have the title field focused to prompt users to start typing.
 
-### 4. Stretch Goals
+- **Sorting Functionality:**
+   Ability to sort ideas by creation date or alphabetically.
 
-#### localStorage Persistence
-- ThinkPad utilizes the localStorage API to persist the current state, ensuring your ideas are saved even when the page is refreshed.
+- **LocalStorage Persistence:**
+   Utilizes the localStorage API to persist current state when the page is refreshed.
 
-#### Character Countdown
-- Experience a helpful character countdown as you approach the limit of your description text, helping you stay concise and focused.
+- **Character Countdown:**
+   Provides a character countdown as the user approaches the limit of their description text.
 
-#### Unobtrusive Notifications
-- Receive subtle notifications whenever an update is made to a tile, keeping you informed without disrupting your flow.
+- **Toast Notifications:**
+   Toast notifications are displayed when an update is made to a tile.
+ 
+</div>
 
-## Getting Started
-1. Clone the repository to your local machine.
-2. Open `index.html` in your preferred web browser.
-3. Start organizing your ideas with ThinkPad!
 
-## Contributions
-I welcome contributions! If you have ideas for improvements or new features, feel free to open an issue or submit a pull request.
 
 ## License
-This project is part of a technical take-home assessment and is licensed under the [MIT License](LICENSE).
 
-Happy ideating with ThinkPad! 🚀
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
