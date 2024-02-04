@@ -47,7 +47,6 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave, cardSaved }
       });
 
       onSave(updatedIdea);
-      cardSaved();
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error('Validation error:', error.errors);
@@ -97,6 +96,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave, cardSaved }
           <button
             type="submit"
             className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
+            onClick={() => handleSubmit(onSubmit)()}
           >
             Save
           </button>

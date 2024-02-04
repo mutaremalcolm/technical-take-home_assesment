@@ -13,10 +13,10 @@ import IdeaCard from '@/components/IdeaCard';
 
 
 
-const cardSaved = () => toast('Th!nkPad saved');
-const ideasCleared = () => toast('ThinkPad cleared');
-const sortIdeas = () => toast('Th!nkPads Sorted');
-const deleteIdeas = () => toast('Th!nkPads Deleted');
+const cardSaved = () => toast('💡 Save Successful');
+const ideasCleared = () => toast('🧹  Clear Successful');
+const sortIdeas = () => toast('🔄 Sort Successful');
+const deleteIdeas = () => toast('🗑️ Delete Successful');
 
 
 export default function Home() {
@@ -61,6 +61,7 @@ const handleSave = (updatedIdea: Idea, index: number) => {
   const newIdeas = [...ideas];
   newIdeas[index] = updatedIdea;
   setIdeas(newIdeas);
+  cardSaved();
 };
 
 const handleDelete = (index: number) => {
