@@ -7,26 +7,26 @@
 ## Features
 
 - **Fully Responsive:**
-  - Page is designed to be fully responsive on various devices.
+   Page is designed to be fully responsive on various devices.
 
 - **Editable Idea Tiles:**
-  - Each idea tile contains a title and description that are editable.
-  - Created/updated time is also displayed.
+   Each idea tile contains a title and description that are editable.
+   Created/updated time is also displayed.
 
 - **Focused Title for New Ideas:**
-  - New ideas have the title field focused to prompt users to start typing.
+   New ideas have the title field focused to prompt users to start typing.
 
 - **Sorting Functionality:**
-  - Ability to sort ideas by creation date or alphabetically.
+   Ability to sort ideas by creation date or alphabetically.
 
 - **LocalStorage Persistence:**
-  - Utilizes the localStorage API to persist current state when the page is refreshed.
+   Utilizes the localStorage API to persist current state when the page is refreshed.
 
 - **Character Countdown:**
-  - Provides a character countdown as the user approaches the limit of their description text.
+   Provides a character countdown as the user approaches the limit of their description text.
 
 - **Toast Notifications:**
-  - Toast notifications are displayed when an update is made to a tile.
+   Toast notifications are displayed when an update is made to a tile.
  
 </div>
 
