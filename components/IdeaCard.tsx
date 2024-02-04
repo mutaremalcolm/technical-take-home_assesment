@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Idea } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
+import { useState } from 'react';
 
 
 const IdeaSchema = z.object({
@@ -35,6 +36,13 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave, cardSaved }
         },
       });
 
+const [remainingChars, setRemainingChars] = useState(255);
+  const handleContentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const newContent = event.target.value;
+        setValue('content', newContent); 
+        setRemainingChars(255 - newContent.length); 
+      };
+
   const onSubmit: SubmitHandler<Idea> = async (data) => {
     try {
       const updatedIdea: Idea = IdeaSchema.parse({
@@ -57,7 +65,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave, cardSaved }
   };
 
   return (
-      
+      // <form >
       <div onSubmit={handleSubmit(onSubmit)} className="relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4">
         <button
           onClick={onDelete}
@@ -84,9 +92,14 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave, cardSaved }
           />
           <textarea
             {...register('content')}
+            onChange={handleContentChange}
+            value={idea.content}
             className="resize-none focus:outline-none focus:shadow-outline w-full"
             placeholder="Enter your ideas here..."
           />
+          <p className="text-gray-500 text-sm mt-2">
+        Remaining Characters: {remainingChars}/{255}
+      </p>
         </div>
         <div className="flex justify-between items-center mt-4">
           <p className="text-gray-500 text-sm">
@@ -102,6 +115,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave, cardSaved }
           </button>
         </div>
       </div>
+      // </form>
   );
 };
 
