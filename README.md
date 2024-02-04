@@ -1,35 +1,37 @@
 <div align="center">
   <h1>ThinkPad - Your Idea Management App 🚀</h1>
   <p>Welcome to ThinkPad, my solution for the technical take-home assessment – a powerful application to help you manage and organize your brilliant ideas!</p>
-  <p>Check out the live demo [here](https://technical-take-home-assesment.vercel.app/).</p>
+  <p>🔗 [Live Demo](https://technical-take-home-assesment.vercel.app/)</p>
+
+
+## Features
+
+- **Fully Responsive:**
+  - Page is designed to be fully responsive on various devices.
+
+- **Editable Idea Tiles:**
+  - Each idea tile contains a title and description that are editable.
+  - Created/updated time is also displayed.
+
+- **Focused Title for New Ideas:**
+  - New ideas have the title field focused to prompt users to start typing.
+
+- **Sorting Functionality:**
+  - Ability to sort ideas by creation date or alphabetically.
+
+- **LocalStorage Persistence:**
+  - Utilizes the localStorage API to persist current state when the page is refreshed.
+
+- **Character Countdown:**
+  - Provides a character countdown as the user approaches the limit of their description text.
+
+- **Toast Notifications:**
+  - Toast notifications are displayed when an update is made to a tile.
+ 
 </div>
 
-## Table of Contents
-- [Features](#features)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
-<div align="center">
-  <h2>Features</h2>
-</div>
 
-...
+## License
 
-<div align="center">
-  <h2>Usage</h2>
-</div>
-
-...
-
-<div align="center">
-  <h2>Contributing</h2>
-</div>
-
-...
-
-<div align="center">
-  <h2>License</h2>
-</div>
-
-...
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
