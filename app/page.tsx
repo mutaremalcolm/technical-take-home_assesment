@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 
 export default function Home() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
+  
  
   useEffect(() => {
     const savedIdeas = localStorage.getItem('ideas');
@@ -25,7 +26,6 @@ export default function Home() {
       console.log("setting local storage," , JSON.stringify(ideas))
     }
   }, [ideas]);
-
 
   const handleAddNewCard = () => {
     const currentDate = new Date();
@@ -46,12 +46,13 @@ export default function Home() {
 const handleSave = (updatedIdea: Idea, index: number) => {
   const newIdeas = [...ideas];
   newIdeas[index] = updatedIdea;
+  console.log('Updated Idea:', updatedIdea);
+  console.log('New Ideas:', newIdeas);
   setIdeas(newIdeas);
+  localStorage.setItem('ideas', JSON.stringify(newIdeas));
   toast.success('💡 Save Successful', {
     position: "bottom-center"
   })
-
-  setIdeas(newIdeas);
 };
 
 const handleDelete = (index: number) => {
@@ -103,7 +104,6 @@ const handleSampleIdeas = () => {
   const currentDate = new Date();
 }
 
-
   return (
     <>
       <Navigation onAddNewCard={handleAddNewCard} />
@@ -149,5 +149,6 @@ const handleSampleIdeas = () => {
     </>
   );
 }
+
 
 
