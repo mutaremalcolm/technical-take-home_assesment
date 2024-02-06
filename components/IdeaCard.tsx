@@ -44,7 +44,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
     resolver: zodResolver(EditIdeaSchema),
     mode: "onChange",
     reValidateMode: "onChange",
-    shouldFocusError: true,
+    shouldFocusError: false,
     defaultValues: {
       title: idea.title || '',
       description: idea.description || '',
@@ -59,6 +59,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   }, [idea, setValue]);
 
   const onSubmit: SubmitHandler<Idea> = async (data) => {
+    console.log('submit executed')
     try {
       const updatedIdea: Idea = EditIdeaSchema.parse({
         ...idea,
@@ -82,8 +83,6 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
       }
     }
   };
-
-
 
   return (
     <form className={`relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4 ${isSaved ? 'bg-green-100' : ''}`} >
@@ -134,7 +133,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         <button
           type="submit"
           className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
-          onClick={() => handleSubmit(onSubmit)()}
+          onClick={(e) => {e.preventDefault(); console.log('Button Clicked'), handleSubmit(onSubmit)()}}
         >
           Save {isSaved && <div className="absolute bottom-0 left-0 p-2 text-green-500">✓ Saved</div>}
         </button>
