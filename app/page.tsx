@@ -2,6 +2,7 @@
 
 import { Idea } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
+import { sampleIdeas } from '@/lib/constants';
 import React, { useState, useEffect } from 'react';
 import Navigation from '@/components/Navbar';
 import IdeaCard from '@/components/IdeaCard';
@@ -17,8 +18,12 @@ export default function Home() {
     if (savedIdeas) {
       setIdeas(JSON.parse(savedIdeas))
       console.log('fetching data from localStorage', JSON.parse(savedIdeas))
+    }else {
+      setIdeas(sampleIdeas);
+      localStorage.setItem('ideas', JSON.stringify(sampleIdeas));
+      console.log('Setting sample ideas in local storage');
     }
-  }, [setIdeas])
+  }, [])
 
   useEffect(() => {
     if (ideas.length > 0) {
@@ -46,10 +51,11 @@ export default function Home() {
 const handleSave = (updatedIdea: Idea, index: number) => {
   const newIdeas = [...ideas];
   newIdeas[index] = updatedIdea;
-  console.log('Updated Idea:', updatedIdea);
-  console.log('New Ideas:', newIdeas);
   setIdeas(newIdeas);
   localStorage.setItem('ideas', JSON.stringify(newIdeas));
+  console.log('Updated Idea:', updatedIdea);
+  console.log('New Ideas:', newIdeas);
+  console.log('executed')
   toast.success('💡 Save Successful', {
     position: "bottom-center"
   })
@@ -101,7 +107,11 @@ const handleClearIdeas = () => {
 
 
 const handleSampleIdeas = () => {
-  const currentDate = new Date();
+    setIdeas(sampleIdeas);
+    localStorage.setItem('ideas', JSON.stringify(sampleIdeas));
+    toast.success('🌟 Sample Ideas Added', {
+      position: 'bottom-center',
+    });
 }
 
   return (
