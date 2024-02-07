@@ -34,6 +34,7 @@ interface IdeaCardProps {
 const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   const [charCount, setCharCount] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
+  
 
   const {
     register,
@@ -59,7 +60,10 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   }, [idea, setValue]);
 
   const onSubmit: SubmitHandler<Idea> = async (data) => {
+    console.log('Form Data:', data);
+    console.log('submit executed');
     console.log('submit executed')
+    console.log('Form Data:', data);
     try {
       const updatedIdea: Idea = EditIdeaSchema.parse({
         ...idea,
@@ -85,13 +89,8 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   };
 
   return (
-    <form className={`relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4 ${isSaved ? 'bg-green-100' : ''}`} >
-      <button
-        onClick={onDelete}
-        className="absolute top-0 right-0 p-2 cursor-pointer text-red-500"
-      >
-         <MdDeleteForever className="text-red-500 text-4xl" />
-      </button>
+    <>
+    <form  onSubmit={handleSubmit(onSubmit)} className={`relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4 ${isSaved ? 'bg-green-100' : ''}`} >
       <div>
         <input
           {...register('title')}
@@ -122,24 +121,34 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         {errors.content && <span className="text-red-500">{errors.content.message}</span>}
 
         <p className="text-gray-500 text-sm mt-2">
-          Remaining Characters: {charCount}/150
-        </p>
-      </div>
-      <div className="flex justify-between items-center mt-4">
-        <p className="text-gray-500 text-sm">
-          Created: {idea.createdTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'} | Updated:{' '}
-          {idea.updatedTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'}
-        </p>
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
-          onClick={(e) => {e.preventDefault(); console.log('Button Clicked'), handleSubmit(onSubmit)()}}
-        >
-          Save {isSaved && <div className="absolute bottom-0 left-0 p-2 text-green-500">✓ Saved</div>}
-        </button>
-      </div>
-    </form>
+            Remaining Characters: {charCount}/150
+          </p>
+        </div>
+        <div className="flex justify-between items-center  mt-4">
+          <p className="text-gray-500 text-sm">
+            Created: {idea.createdTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'} | Updated:{' '}
+            {idea.updatedTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'}
+          </p>
+            <div className="flex">
+              <button
+                onClick={onDelete}
+                className="p-2 cursor-pointer text-red-500 mr-2"
+              >
+                <MdDeleteForever className="text-red-500 text-4xl" />
+              </button>
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
+                onClick={(e) => { e.preventDefault(); console.log('Button Clicked'), handleSubmit(onSubmit)(); }}
+              >
+                Save {isSaved && <div className="absolute bottom-0 left-0 p-2 text-green-500">✓ Saved</div>}
+              </button>
+            </div>
+          </div>
+      </form>
+    </>
   );
 };
 
 export default IdeaCard;
+

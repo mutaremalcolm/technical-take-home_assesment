@@ -16,9 +16,6 @@ Adidng prettify and eslinter (use keyboard shortcut regularly and good practice 
 
 
 
-
-
-
 MAIN FUNCTIONALITY:
 ----------------------------------------------------------
 
@@ -34,7 +31,7 @@ Adding sorting functionality
 
 
 
-
+/done and working by next session
 
 
 
@@ -44,6 +41,10 @@ STRETCH FEATS IN ORDER
 
 2.  Setup and write basic unit/integration tests. 
 (try write 5 simple tests that work, no more) hardest part is setting up jest and rtl with next. 
+
+
+/not done but attempted by next session 
+
 
 3.  Add a character countdown as user is approaching the limit of description text. 
 (HARD - but good practice, expect you to struggle - dont spend too long tyring)
