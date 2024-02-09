@@ -59,7 +59,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
     setValue('content', idea.content || '');
   }, [idea, setValue]);
 
-  const onSubmit: SubmitHandler<Idea> = async (data) => {
+ const onSubmit: SubmitHandler<Idea> = async (data) => {
     console.log('Form Data:', data);
     console.log('submit executed');
     console.log('submit executed')
@@ -76,6 +76,13 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
       onSave(updatedIdea);
       setIsSaved(true);
       setTimeout(() => setIsSaved(false), 3000);
+
+      const updatedIdeas = JSON.parse(localStorage.getItem("ideas") || "[]").map(
+        (storedIdea: Idea) =>
+          storedIdea.uuid === updatedIdea.uuid ? updatedIdea : storedIdea
+      );
+      localStorage.setItem("ideas", JSON.stringify(updatedIdeas));
+
       // toast notif
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -139,13 +146,12 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
               <button
                 type="submit"
                 className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
-                onClick={(e) => { e.preventDefault(); console.log('Button Clicked'), handleSubmit(onSubmit)(); }}
               >
                 Save {isSaved && <div className="absolute bottom-0 left-0 p-2 text-green-500">✓ Saved</div>}
               </button>
             </div>
           </div>
-      </form>
+      </form>    
     </>
   );
 };

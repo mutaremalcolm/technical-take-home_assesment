@@ -81,7 +81,7 @@ const handleSortByCreatedTime = () => {
   })
 };
 
-const handleSortByTitle = () => {
+ const handleSortByTitle = () => {
   const sortedIdeas = [...ideas].sort((a, b) => a.title.localeCompare(b.title));
   setIdeas(sortedIdeas);
   toast.success('🔄 Sort Successful', {
@@ -89,7 +89,7 @@ const handleSortByTitle = () => {
   })
 };
 
-const handleSortByTitleReverse = () => {
+ const handleSortByTitleReverse = () => {
   const sortedIdeas = [...ideas].sort((a, b) => b.title.localeCompare(a.title));
   setIdeas(sortedIdeas);
   toast.success('🔄 Sort Successful', {
