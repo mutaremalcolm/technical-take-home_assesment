@@ -1,8 +1,9 @@
 export interface Idea {
     uuid: string; 
     title: string;
-    description: string;
+    description?: string;
+    content?: string;
     createdTime: Date;  
     updatedTime: Date;  
-    content: string;  
+      
   }

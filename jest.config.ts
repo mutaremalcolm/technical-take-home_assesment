@@ -1,10 +1,12 @@
+/* eslint-env jest */
+
 import  {Config} from 'jest';
 
 const config = {
   preset: 'ts-jest',
   verbose: true,
   setupFilesAfterEnv: [
-     "<rootDir>/src/setupTests.js",
+    "<rootDir>/support/setupTests.js",
     "@testing-library/jest-dom/extend-expect"
   ]
 };
