@@ -44,8 +44,7 @@ export default function Home() {
     content: ''
   };
 
-  
-  setIdeas([...ideas, newCard]);
+   setIdeas([...ideas, newCard]);
 };
 
 const handleSave = (updatedIdea: Idea, index: number) => {
@@ -53,8 +52,6 @@ const handleSave = (updatedIdea: Idea, index: number) => {
   newIdeas[index] = updatedIdea;
   setIdeas(newIdeas);
   localStorage.setItem('ideas', JSON.stringify(newIdeas));
-  console.log('Updated Idea:', updatedIdea);
-  console.log('New Ideas:', newIdeas);
   console.log('executed')
   toast.success('💡 Save Successful', {
     position: "bottom-center"

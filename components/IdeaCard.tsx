@@ -2,12 +2,12 @@
 
 import * as z from "zod";
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
+import { MdDeleteForever } from "react-icons/md";
 
 import { Idea } from '@/lib/types';
-import { MdDeleteForever } from "react-icons/md";
+
 
 const EditIdeaSchema = z.object({
   uuid: z.string(),
@@ -17,11 +17,13 @@ const EditIdeaSchema = z.object({
     .max(16, {
       message: "⚠ Title must not be longer than 16 characters.",
     }),
-  description: z.string(),   //update later .optional()
-  content: z.string().max(140, "Must be less than"),  //update later .optional()
+  description: z.string().optional(),   
+  content: z.string().max(140 , "Must be less than").optional(),  
   createdTime: z.date(),
   updatedTime: z.date()
 });
+
+
 type EditIdeaSchemaType = z.infer<typeof EditIdeaSchema>;
 
 interface IdeaCardProps {
@@ -35,23 +37,12 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   const [charCount, setCharCount] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
   
-
   const {
     register,
     handleSubmit,
     setValue, 
     formState: { errors }
-  } = useForm<EditIdeaSchemaType>({
-    resolver: zodResolver(EditIdeaSchema),
-    mode: "onChange",
-    reValidateMode: "onChange",
-    shouldFocusError: false,
-    defaultValues: {
-      title: idea.title || '',
-      description: idea.description || '',
-      content: idea.content || '',
-    },
-  });
+  } = useForm<EditIdeaSchemaType>();
 
   useEffect(() => {
     setValue('title', idea.title || '');
@@ -60,9 +51,8 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   }, [idea, setValue]);
 
  const onSubmit: SubmitHandler<Idea> = async (data) => {
-    console.log('Form Data:', data);
+    console.log('onSubmit function is triggered');
     console.log('submit executed');
-    console.log('submit executed')
     console.log('Form Data:', data);
     try {
       const updatedIdea: Idea = EditIdeaSchema.parse({
@@ -97,7 +87,8 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
 
   return (
     <>
-    <form  onSubmit={handleSubmit(onSubmit)} className={`relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4 ${isSaved ? 'bg-green-100' : ''}`} >
+    <form onSubmit={handleSubmit(onSubmit)}
+    className={`relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4 ${isSaved ? 'bg-green-100' : ''}`} >
       <div>
         <input
           {...register('title')}
@@ -131,24 +122,29 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
             Remaining Characters: {charCount}/150
           </p>
         </div>
-        <div className="flex justify-between items-center  mt-4">
+        <div className="flex justify-between items-center mt-4 mb-8">
           <p className="text-gray-500 text-sm">
             Created: {idea.createdTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'} | Updated:{' '}
             {idea.updatedTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'}
           </p>
-            <div className="flex">
+          </div>
+          <div>
+            <div>
               <button
                 onClick={onDelete}
-                className="p-2 cursor-pointer text-red-500 mr-2"
+                className=" absolute bottom-0 left-0 p-2 cursor-pointer text-red-500 mr-2 text-4xl"
               >
-                <MdDeleteForever className="text-red-500 text-4xl" />
-              </button>
-              <button
+                <MdDeleteForever />
+              </button> 
+              <div>
+              <button 
                 type="submit"
-                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
+                className="absolute bottom-0 right-0 p-2 bg-blue-500 text-white px-3 py-1 mb-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
+                
               >
-                Save {isSaved && <div className="absolute bottom-0 left-0 p-2 text-green-500">✓ Saved</div>}
+                Save {isSaved && <div className="absolute top-0 right-0 p-2 text-green-500">✓ Saved</div>}
               </button>
+              </div>
             </div>
           </div>
       </form>    
@@ -158,3 +154,16 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
 
 export default IdeaCard;
 
+
+
+// {
+//   resolver: zodResolver(EditIdeaSchema),
+//   mode: "onChange",
+//   reValidateMode: "onChange",
+//   shouldFocusError: false,
+//   defaultValues: {
+//     title: idea.title || '',
+//     description: idea.description || '',
+//     content: idea.content || '',
+//   },
+// }
