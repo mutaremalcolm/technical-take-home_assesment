@@ -1,12 +1,12 @@
 'use client';
 
 import * as z from "zod";
-import { useEffect, useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { zodResolver } from "@hookform/resolvers/zod";
-import { MdDeleteForever } from "react-icons/md";
-
 import { Idea } from '@/lib/types';
+import { MdDeleteForever } from "react-icons/md";
+import { useEffect, useRef, useState } from 'react';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from 'react-hook-form';
+
 
 
 const EditIdeaSchema = z.object({
@@ -23,8 +23,8 @@ const EditIdeaSchema = z.object({
   updatedTime: z.date()
 });
 
-
 type EditIdeaSchemaType = z.infer<typeof EditIdeaSchema>;
+
 
 interface IdeaCardProps {
   idea: Idea;
@@ -35,14 +35,26 @@ interface IdeaCardProps {
 
 const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   const [charCount, setCharCount] = useState(0);
-  const [isSaved, setIsSaved] = useState(false);
+  const isSavedRef = useRef(false);
   
   const {
     register,
     handleSubmit,
     setValue, 
     formState: { errors }
-  } = useForm<EditIdeaSchemaType>();
+  } = useForm<EditIdeaSchemaType>(
+  //   {
+  //   resolver: zodResolver(EditIdeaSchema),
+  //   mode: "onChange",
+  //   reValidateMode: "onChange",
+  //   shouldFocusError: false,
+  //   defaultValues: {
+  //   title: idea.title || '',
+  //   description: idea.description || '',
+  //   content: idea.content || '',
+  //   },
+  // }
+  );
 
   useEffect(() => {
     setValue('title', idea.title || '');
@@ -64,8 +76,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
       });
 
       onSave(updatedIdea);
-      setIsSaved(true);
-      setTimeout(() => setIsSaved(false), 3000);
+      isSavedRef.current = true;
 
       const updatedIdeas = JSON.parse(localStorage.getItem("ideas") || "[]").map(
         (storedIdea: Idea) =>
@@ -88,7 +99,16 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)}
-    className={`relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4 ${isSaved ? 'bg-green-100' : ''}`} >
+    className={`relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4 
+      ${isSavedRef.current ? 'bg-green-100' : ''}`} >
+       <div className="flex justify-between items-center mt-0 mb-2">
+          <p className="text-gray-500 text-sm">
+            Created: {idea.createdTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'}
+            {/* <br/>
+             Updated:{' '}
+            {idea.updatedTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'} */}
+          </p>
+          </div>
       <div>
         <input
           {...register('title')}
@@ -118,16 +138,10 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         />
         {errors.content && <span className="text-red-500">{errors.content.message}</span>}
 
-        <p className="text-gray-500 text-sm mt-2">
-            Remaining Characters: {charCount}/150
+        <p className="text-gray-500 text-sm ml-10 mt-2">
+            Character Count: {charCount}/150
           </p>
         </div>
-        <div className="flex justify-between items-center mt-4 mb-8">
-          <p className="text-gray-500 text-sm">
-            Created: {idea.createdTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'} | Updated:{' '}
-            {idea.updatedTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'}
-          </p>
-          </div>
           <div>
             <div>
               <button
@@ -139,10 +153,13 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
               <div>
               <button 
                 type="submit"
-                className="absolute bottom-0 right-0 p-2 bg-blue-500 text-white px-3 py-1 mb-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline"
-                
+                className={`absolute bottom-0 right-0 mr-4 p-2 ${
+                  isSavedRef.current ? 'bg-green-500' : 'bg-blue-500'
+                } text-white px-3 py-1 mb-2 rounded hover:${
+                  isSavedRef.current ? 'bg-green-600' : 'bg-blue-600'
+                } focus:outline-none focus:shadow-outline`}
               >
-                Save {isSaved && <div className="absolute top-0 right-0 p-2 text-green-500">✓ Saved</div>}
+                {isSavedRef.current ? 'Saved' : 'Save'}
               </button>
               </div>
             </div>
@@ -156,14 +173,3 @@ export default IdeaCard;
 
 
 
-// {
-//   resolver: zodResolver(EditIdeaSchema),
-//   mode: "onChange",
-//   reValidateMode: "onChange",
-//   shouldFocusError: false,
-//   defaultValues: {
-//     title: idea.title || '',
-//     description: idea.description || '',
-//     content: idea.content || '',
-//   },
-// }
