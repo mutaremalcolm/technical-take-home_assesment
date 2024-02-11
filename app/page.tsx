@@ -4,15 +4,14 @@ import { Idea } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
 import { sampleIdeas } from '@/lib/constants';
 import React, { useState, useEffect } from 'react';
-import Navigation from '@/components/Navbar';
-import IdeaCard from '@/components/IdeaCard';
-import toast from 'react-hot-toast';
 
+import toast from 'react-hot-toast';
+import IdeaCard from '@/components/IdeaCard';
+import Navigation from '@/components/Navbar';
 
 export default function Home() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
   
- 
   useEffect(() => {
     const savedIdeas = localStorage.getItem('ideas');
     if (savedIdeas) {
@@ -52,7 +51,6 @@ const handleSave = (updatedIdea: Idea, index: number) => {
   newIdeas[index] = updatedIdea;
   setIdeas(newIdeas);
   localStorage.setItem('ideas', JSON.stringify(newIdeas));
-  console.log('executed')
   toast.success('💡 Save Successful', {
     position: "bottom-center"
   })
