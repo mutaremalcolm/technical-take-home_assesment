@@ -6,21 +6,29 @@ import { MdDeleteForever } from "react-icons/md";
 import { useEffect, useRef, useState } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
 
-
+const generateUUID = () => {
+  return uuidv4();
+};
 
 const EditIdeaSchema = z.object({
-  uuid: z.string(),
+  uuid: z.string().default(()=> generateUUID()),
   title: z.string().min(5, {
     message: "⚠ Title must be at least 5 characters.",
   })
     .max(16, {
       message: "⚠ Title must not be longer than 16 characters.",
-    }),
+    })
+
+  .default("Default Title"),
   description: z.string().optional(),   
-  content: z.string().max(140 , "Must be less than").optional(),  
-  createdTime: z.date(),
-  updatedTime: z.date()
+  content: z.string()
+  .max(140 , "Must be less than")
+  .optional()
+  .default("Default Content"),  
+  createdTime: z.date().default(()=> new Date()),
+  updatedTime: z.date().default(()=> new Date)
 });
 
 type EditIdeaSchemaType = z.infer<typeof EditIdeaSchema>;
@@ -41,26 +49,19 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
     register,
     handleSubmit,
     setValue, 
-    formState: { errors }
-  } = useForm<EditIdeaSchemaType>(
-  //   {
-  //   resolver: zodResolver(EditIdeaSchema),
-  //   mode: "onChange",
-  //   reValidateMode: "onChange",
-  //   shouldFocusError: false,
-  //   defaultValues: {
-  //   title: idea.title || '',
-  //   description: idea.description || '',
-  //   content: idea.content || '',
-  //   },
-  // }
-  );
+    formState: { errors },
+    reset,
+  } = useForm<EditIdeaSchemaType>({resolver: zodResolver(EditIdeaSchema), 
+    mode: "onChange"
+  });
 
   useEffect(() => {
-    setValue('title', idea.title || '');
-    setValue('description', idea.description || '');
-    setValue('content', idea.content || '');
-  }, [idea, setValue]);
+    reset({
+      title: idea.title || '',
+      description: idea.description || '',
+      content: idea.content || '',
+    });
+  }, [idea, reset]);
 
  const onSubmit: SubmitHandler<Idea> = async (data) => {
     console.log('onSubmit function is triggered');
@@ -69,10 +70,12 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
     try {
       const updatedIdea: Idea = EditIdeaSchema.parse({
         ...idea,
+        uuid: data.uuid,
         title: data.title,
         description: data.description,
         content: data.content,
-        updatedTime: new Date(),
+        createdTime: data.createdTime || new Date(),
+        updatedTime: data.updatedTime || new Date(),
       });
 
       onSave(updatedIdea);
@@ -99,14 +102,11 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)}
-    className={`relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4 
+    className={` form relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4 
       ${isSavedRef.current ? 'bg-green-100' : ''}`} >
        <div className="flex justify-between items-center mt-0 mb-2">
           <p className="text-gray-500 text-sm">
             Created: {idea.createdTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'}
-            {/* <br/>
-             Updated:{' '}
-            {idea.updatedTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'} */}
           </p>
           </div>
       <div>
@@ -117,7 +117,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
           placeholder="Enter title..."
           autoFocus
         />
-        {errors.title && <span className="text-red-500">{errors.title.message}</span>}
+        {errors.title &&<span className="text-red-500">{errors.title.message}</span>}
 
         <textarea
           {...register('description')}
@@ -130,7 +130,6 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
           {...register('content')}
           className="resize-none focus:outline-none focus:shadow-outline w-full"
           placeholder="Enter your ideas here..."
-          defaultValue={idea.content}
           onChange={(e) => {
             const newContent = e.target.value;
             setCharCount(newContent.length);
@@ -170,6 +169,8 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
 };
 
 export default IdeaCard;
+
+
 
 
 
