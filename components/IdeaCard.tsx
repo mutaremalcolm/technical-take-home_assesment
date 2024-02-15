@@ -1,12 +1,15 @@
 'use client';
 
 import * as z from "zod";
+import toast from "react-hot-toast";
+
 import { Idea } from '@/lib/types';
+import { v4 as uuidv4 } from 'uuid';
 import { MdDeleteForever } from "react-icons/md";
 import { useEffect, useRef, useState } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { v4 as uuidv4 } from 'uuid';
+
 
 const generateUUID = () => {
   return uuidv4();
@@ -38,7 +41,7 @@ interface IdeaCardProps {
   idea: Idea;
   onDelete: () => void;
   onSave: (updatedIdea: Idea) => void;
-
+  isSavedRef: React.MutableRefObject<boolean>;
 }
 
 const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
@@ -47,8 +50,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   
   const {
     register,
-    handleSubmit,
-    setValue, 
+    handleSubmit, 
     formState: { errors },
     reset,
   } = useForm<EditIdeaSchemaType>({resolver: zodResolver(EditIdeaSchema), 
@@ -64,9 +66,6 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   }, [idea, reset]);
 
  const onSubmit: SubmitHandler<Idea> = async (data) => {
-    console.log('onSubmit function is triggered');
-    console.log('submit executed');
-    console.log('Form Data:', data);
     try {
       const updatedIdea: Idea = EditIdeaSchema.parse({
         ...idea,
@@ -79,7 +78,6 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
       });
 
       onSave(updatedIdea);
-      isSavedRef.current = true;
 
       const updatedIdeas = JSON.parse(localStorage.getItem("ideas") || "[]").map(
         (storedIdea: Idea) =>
@@ -87,14 +85,19 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
       );
       localStorage.setItem("ideas", JSON.stringify(updatedIdeas));
 
-      // toast notif
+      isSavedRef.current = true;
+
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error('Validation error:', error.errors);
-        // toast notif
+        toast.error('🌟 Validation error', {
+          position: 'bottom-center',
+        });
       } else {
         console.error('Unexpected error:', error);
-        // toast notif
+        toast.error('🌟 Unexpected error', {
+          position: 'bottom-center',
+        });
       }
     }
   };

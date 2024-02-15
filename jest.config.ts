@@ -2,13 +2,10 @@
 
 import  {Config} from 'jest';
 
-const config = {
+const config: Config = {
   preset: 'ts-jest',
+  testEnvironment: 'node',
   verbose: true,
-  setupFilesAfterEnv: [
-    "<rootDir>/support/setupTests.js",
-    "@testing-library/jest-dom/extend-expect"
-  ]
 };
 
 export default config;
