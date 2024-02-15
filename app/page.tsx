@@ -12,22 +12,20 @@ import Navigation from '@/components/Navbar';
 export default function Home() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
   
+  
   useEffect(() => {
     const savedIdeas = localStorage.getItem('ideas');
     if (savedIdeas) {
       setIdeas(JSON.parse(savedIdeas))
-      console.log('fetching data from localStorage', JSON.parse(savedIdeas))
     }else {
-      setIdeas(sampleIdeas);
-      localStorage.setItem('ideas', JSON.stringify(sampleIdeas));
-      console.log('Setting sample ideas in local storage');
+      setIdeas([]);
+      localStorage.setItem('ideas', JSON.stringify([]));
     }
   }, [])
 
   useEffect(() => {
     if (ideas.length > 0) {
       localStorage.setItem('ideas', JSON.stringify(ideas));
-      console.log("setting local storage," , JSON.stringify(ideas))
     }
   }, [ideas]);
 
