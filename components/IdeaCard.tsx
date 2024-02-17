@@ -41,7 +41,6 @@ interface IdeaCardProps {
   idea: Idea;
   onDelete: () => void;
   onSave: (updatedIdea: Idea) => void;
-  isSavedRef: React.MutableRefObject<boolean>;
 }
 
 const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {

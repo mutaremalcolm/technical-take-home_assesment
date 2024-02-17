@@ -1,10 +1,11 @@
 /* eslint-env jest */
 
+import '@testing-library/jest-dom/extend-expect';
 import IdeaCard from '@/components/IdeaCard';
 import userEvent from '@testing-library/user-event';
 import { describe, jest, it, expect } from '@jest/globals';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+
 
 const mockIdea = {
   uuid: '123',
@@ -18,7 +19,6 @@ const mockIdea = {
 describe('IdeaCard Component', () => {
   it('renders the IdeaCard component', () => {
     render(<IdeaCard idea={mockIdea} onDelete={() => {}} onSave={() => {}} />);
-    // Add assertions based on your component's structure
     expect(screen.getByText('Test Idea')).toBeInTheDocument();
     expect(screen.getByText('Test Description')).toBeInTheDocument();
     expect(screen.getByText('Test Content')).toBeInTheDocument();
