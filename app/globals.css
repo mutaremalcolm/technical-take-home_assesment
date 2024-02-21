@@ -2,3 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* globals.css */
+
+body {
+    background-color: #3b3a3a; /* Change this to your desired background color */
+    font-family: 'Arial', sans-serif; /* Adjust the font-family if needed */
+    color: #fff; /* Set text color */
+  }
+  
+  /* Add other global styles here */
+  

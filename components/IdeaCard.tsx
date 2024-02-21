@@ -27,9 +27,8 @@ const EditIdeaSchema = z.object({
   .default("Default Title"),
   description: z.string().optional(),   
   content: z.string()
-  .max(140 , "Must be less than")
-  .optional()
-  .default("Default Content"),  
+    .max(150 , { message: "⚠ Content must be less than 150 characters."})
+    .default("Default Content"),  
   createdTime: z.date().default(()=> new Date()),
   updatedTime: z.date().default(()=> new Date)
 });
@@ -104,7 +103,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)}
-    className={` form relative bg-white rounded-lg shadow-lg p-4 mb-4 lg:w-1/4 
+    className={` form relative bg-gray-800 bg-opacity-90 rounded-lg shadow-md border border-clearScoreGrey p-4 mb-4 lg:w-1/4 
       ${isSavedRef.current ? 'bg-green-100' : ''}`} >
        <div className="flex justify-between items-center mt-0 mb-2">
           <p className="text-gray-500 text-sm">
@@ -115,7 +114,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         <input
           {...register('title')}
           type="text"
-          className="font-bold text-lg mb-2 focus:outline-none focus:shadow-outline border-b-2 border-blue-500 w-full"
+          className="bg-transparent font-bold text-lg mb-2 focus:outline-none focus:shadow-outline border-b-2 border-white w-full"
           placeholder="Enter title..."
           autoFocus
         />
@@ -123,23 +122,25 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
 
         <textarea
           {...register('description')}
-          className="resize-none focus:outline-none focus:shadow-outline w-full"
+          className="bg-transparent resize-none focus:outline-none focus:shadow-outline w-full"
           placeholder="Idea description..."
         />
         {errors.description && <span className="text-red-500">{errors.description.message}</span>}
 
         <textarea
           {...register('content')}
-          className="resize-none focus:outline-none focus:shadow-outline w-full"
+          className="bg-transparent resize-none focus:outline-none focus:shadow-outline w-full"
           placeholder="Enter your ideas here..."
           onChange={(e) => {
             const newContent = e.target.value;
+            if (newContent.length <= 150) {
             setCharCount(newContent.length);
+            }
           }}
         />
         {errors.content && <span className="text-red-500">{errors.content.message}</span>}
 
-        <p className="text-gray-500 text-sm ml-10 mt-2">
+        <p className="bg-transparent text-gray-500 text-sm ml-10 mt-2">
             Character Count: {charCount}/150
           </p>
         </div>
@@ -147,17 +148,17 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
             <div>
               <button
                 onClick={onDelete}
-                className=" absolute bottom-0 left-0 p-2 cursor-pointer text-red-500 mr-2 text-4xl"
+                className=" absolute bottom-0 left-0 p-2 cursor-pointer text-bg-800 mr-2 text-4xl"
               >
                 <MdDeleteForever />
               </button> 
               <div>
               <button 
                 type="submit"
-                className={`absolute bottom-0 right-0 mr-4 p-2 ${
-                  isSavedRef.current ? 'bg-green-500' : 'bg-blue-500'
-                } text-white px-3 py-1 mb-2 rounded hover:${
-                  isSavedRef.current ? 'bg-green-600' : 'bg-blue-600'
+                className={`absolute bottom-0 right-0 mr-4 p-2 hover:bg-gray-400 ${
+                  isSavedRef.current ? 'bg-green-500' : 'bg-white'
+                } text-black px-3 py-1 mb-2 rounded hover:${
+                  isSavedRef.current ? 'bg-green-600' : 'bg-black'
                 } focus:outline-none focus:shadow-outline`}
               >
                 {isSavedRef.current ? 'Saved' : 'Save'}

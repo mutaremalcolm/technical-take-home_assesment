@@ -7,18 +7,32 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
-  theme: {
-    extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+  // module.exports = {
+    theme: {
+      extend: {
+        backgroundColor: {
+          'transparent': 'var(--rnb-colour-transparent)',
+        colors: {
+          clearScoreBlue: '#0070f3',
+          // Add other ClearScore colors here
+        },
       },
-      // darkMode: "class",
-      // plugins: [nextui()],
-    
     },
-  },
-  plugins: [],
-};
+  }
+    // ...
+  };
+//   theme: {
+//     extend: {
+//       backgroundImage: {
+//         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+//         "gradient-conic":
+//           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+//       },
+//       // darkMode: "class",
+//       // plugins: [nextui()],
+    
+//     },
+//   },
+//   plugins: [],
+// };
 export default config;
