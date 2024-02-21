@@ -29,9 +29,13 @@ const EditIdeaSchema = z.object({
   content: z.string()
     .max(150 , { message: "⚠ Content must be less than 150 characters."})
     .default("Default Content"),  
-  createdTime: z.date().default(()=> new Date()),
-  updatedTime: z.date().default(()=> new Date)
-});
+    createdTime: z.date().refine((value) => !isNaN(value.getTime()), {
+      message: 'Invalid Date',
+    }).default(() => new Date()),
+    updatedTime: z.date().refine((value) => !isNaN(value.getTime()), {
+      message: 'Invalid Date',
+    }).default(() => new Date()),
+  });
 
 type EditIdeaSchemaType = z.infer<typeof EditIdeaSchema>;
 
@@ -71,8 +75,8 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         title: data.title,
         description: data.description,
         content: data.content,
-        createdTime: data.createdTime || new Date(),
-        updatedTime: data.updatedTime || new Date(),
+        createdTime: new Date(data.createdTime), // Convert to Date object
+        updatedTime: new Date(data.updatedTime), // Convert to Date object
       });
 
       onSave(updatedIdea);
@@ -99,15 +103,39 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
       }
     }
   };
-
+  
+  const formatDateTime = (dateTime: Date) => {
+    // Check if dateTime is a valid date
+    if (!(dateTime instanceof Date) || isNaN(dateTime.getTime())) {
+      console.log(dateTime)
+      return 'Invalid Date';
+    }
+  
+    const options: Intl.DateTimeFormatOptions = {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    };
+  
+    return new Intl.DateTimeFormat('en-US', options).format(dateTime);
+  };
+  
+  
+  
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)}
     className={` form relative bg-gray-800 bg-opacity-90 rounded-lg shadow-md border border-clearScoreGrey p-4 mb-4 lg:w-1/4 
-      ${isSavedRef.current ? 'bg-green-100' : ''}`} >
+      ${isSavedRef.current ? 'bg-green-100' : ''
+      } hover:shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105`} 
+      style={{ margin: '10px' }}
+      >
        <div className="flex justify-between items-center mt-0 mb-2">
-          <p className="text-gray-500 text-sm">
-            Created: {idea.createdTime ? new Date(idea.createdTime).toLocaleString() : 'N/A'}
+          <p className=" text-gray-500 text-sm">
+          Created: {idea.createdTime ? formatDateTime(idea.createdTime) : 'N/A'}
           </p>
           </div>
       <div>
@@ -148,7 +176,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
             <div>
               <button
                 onClick={onDelete}
-                className=" absolute bottom-0 left-0 p-2 cursor-pointer text-bg-800 mr-2 text-4xl"
+                className=" hover: transition-shadow absolute bottom-0 left-0 p-2 cursor-pointer text-bg-800 mr-2 text-4xl"
               >
                 <MdDeleteForever />
               </button> 

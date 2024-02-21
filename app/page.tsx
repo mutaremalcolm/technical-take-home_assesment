@@ -49,12 +49,14 @@ const handleSave = (updatedIdea: Idea, index: number) => {
   newIdeas[index] = updatedIdea;
   setIdeas(newIdeas);
   localStorage.setItem('ideas', JSON.stringify(newIdeas));
+  if (ideas.length > 0) {
   toast.success('💡 Save Successful', {
     position: "bottom-center",
     style: {
-      background: 'gray',
+      background: 'slate',
     },
   })
+};
 };
 
 const handleDelete = (index: number) => {
@@ -62,12 +64,14 @@ const handleDelete = (index: number) => {
   newIdeas.splice(index, 1);
   setIdeas(newIdeas);
   localStorage.removeItem('ideas');
+  if (ideas.length > 0) {
   toast.success('🗑️ Delete Successful', {
     position: "bottom-center",
     style: {
-      background: 'gray',
+      background: 'slate',
     },
   })
+};
 };
 
 const handleSortByCreatedTime = () => {
@@ -75,45 +79,53 @@ const handleSortByCreatedTime = () => {
     (a, b) => new Date(a.createdTime).getTime() - new Date(b.createdTime).getTime()
   );
   setIdeas(sortedIdeas);
+  if (ideas.length > 0) {
   toast.success('🔄 Sort Successful', {
     position: "bottom-center",
     style: {
-      background: 'gray',
+      background: 'slate',
     },
   })
+};
 };
 
  const handleSortByTitle = () => {
   const sortedIdeas = [...ideas].sort((a, b) => a.title.localeCompare(b.title));
   setIdeas(sortedIdeas);
+  if (ideas.length > 0) {
   toast.success('🔄 Sort Successful', {
     position: "bottom-center",
     style: {
-      background: 'gray',
+      background: 'slate',
     },
   })
+};
 };
 
  const handleSortByTitleReverse = () => {
   const sortedIdeas = [...ideas].sort((a, b) => b.title.localeCompare(a.title));
   setIdeas(sortedIdeas);
+  if (ideas.length > 0) {
   toast.success('🔄 Sort Successful', {
     position: "bottom-center",
     style: {
-      background: 'gray',
+      background: 'slate',
     },
   })
+};
 };
 
 const handleClearIdeas = () => {
   setIdeas([]);
   localStorage.removeItem('ideas');
+  if (ideas.length > 0) {
   toast.success('🧹  Clear Successful', {
     position: "bottom-center",
     style: {
-      background: 'gray',
+      background: 'slate',
     },
   })
+};
 };
 
 
@@ -123,7 +135,7 @@ const handleSampleIdeas = () => {
     toast.success('🌟 Sample Ideas Added', {
       position: 'bottom-center',
       style: {
-        background: 'gray',
+        background: 'slate',
       },
     });
 }
@@ -135,28 +147,29 @@ const handleSampleIdeas = () => {
         <div className="flex">
         <button onClick={handleSampleIdeas} 
           className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
-         hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center  border">
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105
+          focus:outline-none focus:shadow-outline justify-center  border">
           Sample Ideas
         </button>
         <button onClick={handleSortByCreatedTime} 
           className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
-         hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
           Sort By Date
         </button>
         <button onClick={handleSortByTitle} 
           className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
-         hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
           Sort A-Z
         </button>
           <button onClick={handleSortByTitleReverse} 
           className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4  ml-3 font-bold
-         hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
            Sort Z-A
         </button>
         <button
           onClick={handleClearIdeas}
           className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
-           hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
         >
           Delete All
         </button>
