@@ -16,12 +16,16 @@ export default function Home() {
   useEffect(() => {
     const savedIdeas = localStorage.getItem('ideas');
     if (savedIdeas) {
-      setIdeas(JSON.parse(savedIdeas))
-    }else {
+      setIdeas(JSON.parse(savedIdeas).map((idea: Idea) => ({
+        ...idea,
+        createdTime: new Date(idea.createdTime),
+        updatedTime: new Date(idea.updatedTime),
+      })));
+    } else {
       setIdeas([]);
       localStorage.setItem('ideas', JSON.stringify([]));
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (ideas.length > 0) {

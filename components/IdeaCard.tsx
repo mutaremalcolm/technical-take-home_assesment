@@ -143,17 +143,17 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
           {...register('title')}
           type="text"
           className="bg-transparent font-bold text-lg mb-2 focus:outline-none focus:shadow-outline border-b-2 border-white w-full"
-          placeholder="Enter title..."
+          placeholder="Enter Title & Description..."
           autoFocus
         />
         {errors.title &&<span className="text-red-500">{errors.title.message}</span>}
 
-        <textarea
+        {/* <textarea
           {...register('description')}
           className="bg-transparent resize-none focus:outline-none focus:shadow-outline w-full"
           placeholder="Idea description..."
         />
-        {errors.description && <span className="text-red-500">{errors.description.message}</span>}
+        {errors.description && <span className="text-red-500">{errors.description.message}</span>} */}
 
         <textarea
           {...register('content')}
@@ -168,7 +168,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         />
         {errors.content && <span className="text-red-500">{errors.content.message}</span>}
 
-        <p className="bg-transparent text-gray-500 text-sm ml-10 mt-2">
+        <p className="bg-transparent text-gray-500 text-sm ml-10 mt-10">
             Character Count: {charCount}/150
           </p>
         </div>
