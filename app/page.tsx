@@ -11,17 +11,20 @@ import Navigation from '@/components/Navbar';
 
 export default function Home() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
-  
-  
+   
   useEffect(() => {
     const savedIdeas = localStorage.getItem('ideas');
     if (savedIdeas) {
-      setIdeas(JSON.parse(savedIdeas))
-    }else {
+      setIdeas(JSON.parse(savedIdeas).map((idea: Idea) => ({
+        ...idea,
+        createdTime: new Date(idea.createdTime),
+        updatedTime: new Date(idea.updatedTime),
+      })));
+    } else {
       setIdeas([]);
       localStorage.setItem('ideas', JSON.stringify([]));
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (ideas.length > 0) {
@@ -49,9 +52,14 @@ const handleSave = (updatedIdea: Idea, index: number) => {
   newIdeas[index] = updatedIdea;
   setIdeas(newIdeas);
   localStorage.setItem('ideas', JSON.stringify(newIdeas));
+  if (ideas.length > 0) {
   toast.success('💡 Save Successful', {
-    position: "bottom-center"
+    position: "bottom-center",
+    style: {
+      background: 'slate',
+    },
   })
+};
 };
 
 const handleDelete = (index: number) => {
@@ -59,9 +67,14 @@ const handleDelete = (index: number) => {
   newIdeas.splice(index, 1);
   setIdeas(newIdeas);
   localStorage.removeItem('ideas');
+  if (ideas.length > 0) {
   toast.success('🗑️ Delete Successful', {
-    position: "bottom-center"
+    position: "bottom-center",
+    style: {
+      background: 'slate',
+    },
   })
+};
 };
 
 const handleSortByCreatedTime = () => {
@@ -69,33 +82,53 @@ const handleSortByCreatedTime = () => {
     (a, b) => new Date(a.createdTime).getTime() - new Date(b.createdTime).getTime()
   );
   setIdeas(sortedIdeas);
+  if (ideas.length > 0) {
   toast.success('🔄 Sort Successful', {
-    position: "bottom-center"
+    position: "bottom-center",
+    style: {
+      background: 'slate',
+    },
   })
+};
 };
 
  const handleSortByTitle = () => {
   const sortedIdeas = [...ideas].sort((a, b) => a.title.localeCompare(b.title));
   setIdeas(sortedIdeas);
+  if (ideas.length > 0) {
   toast.success('🔄 Sort Successful', {
-    position: "bottom-center"
+    position: "bottom-center",
+    style: {
+      background: 'slate',
+    },
   })
+};
 };
 
  const handleSortByTitleReverse = () => {
   const sortedIdeas = [...ideas].sort((a, b) => b.title.localeCompare(a.title));
   setIdeas(sortedIdeas);
+  if (ideas.length > 0) {
   toast.success('🔄 Sort Successful', {
-    position: "bottom-center"
+    position: "bottom-center",
+    style: {
+      background: 'slate',
+    },
   })
+};
 };
 
 const handleClearIdeas = () => {
   setIdeas([]);
   localStorage.removeItem('ideas');
+  if (ideas.length > 0) {
   toast.success('🧹  Clear Successful', {
-    position: "bottom-center"
+    position: "bottom-center",
+    style: {
+      background: 'slate',
+    },
   })
+};
 };
 
 
@@ -104,6 +137,9 @@ const handleSampleIdeas = () => {
     localStorage.setItem('ideas', JSON.stringify(sampleIdeas));
     toast.success('🌟 Sample Ideas Added', {
       position: 'bottom-center',
+      style: {
+        background: 'slate',
+      },
     });
 }
 
@@ -111,31 +147,36 @@ const handleSampleIdeas = () => {
     <>
       <Navigation onAddNewCard={handleAddNewCard} />
       <header className="flex flex-col items-center">
-        <div className="flex">
+        <div className="flex flex-wrap justify-center sm:justify-start">
         <button onClick={handleSampleIdeas} 
-          className="bg-purple-500 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
-         hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center">
+          className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
+          hover:scale-105 focus:outline-none focus:shadow-outline justify-center  border">
           Sample Ideas
         </button>
         <button onClick={handleSortByCreatedTime} 
-          className="bg-orange-500 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
-         hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center">
+          className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
+          hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
           Sort By Date
         </button>
         <button onClick={handleSortByTitle} 
-          className="bg-green-500 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
-         hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center">
+          className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
+          hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
           Sort A-Z
         </button>
           <button onClick={handleSortByTitleReverse} 
-          className="bg-blue-500 text-white p-2 mb-2 rounded text-sm mt-4  ml-3 font-bold
-         hover:bg-gray-400 focus:outline-none focus:shadow-outline justify-center">
+          className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4  ml-3 font-bold
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
+          hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
            Sort Z-A
         </button>
         <button
           onClick={handleClearIdeas}
-          className="bg-red-500 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
-           hover:bg-gray-600 focus:outline-none focus:shadow-outline justify-center"
+          className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
+          hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
         >
           Delete All
         </button>
