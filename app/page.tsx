@@ -11,8 +11,7 @@ import Navigation from '@/components/Navbar';
 
 export default function Home() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
-  
-  
+   
   useEffect(() => {
     const savedIdeas = localStorage.getItem('ideas');
     if (savedIdeas) {
@@ -151,29 +150,33 @@ const handleSampleIdeas = () => {
         <div className="flex flex-wrap justify-center sm:justify-start">
         <button onClick={handleSampleIdeas} 
           className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
-          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105
-          focus:outline-none focus:shadow-outline justify-center  border">
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
+          hover:scale-105 focus:outline-none focus:shadow-outline justify-center  border">
           Sample Ideas
         </button>
         <button onClick={handleSortByCreatedTime} 
           className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
-          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
+          hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
           Sort By Date
         </button>
         <button onClick={handleSortByTitle} 
           className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
-          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
+          hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
           Sort A-Z
         </button>
           <button onClick={handleSortByTitleReverse} 
           className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4  ml-3 font-bold
-          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
+          hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border">
            Sort Z-A
         </button>
         <button
           onClick={handleClearIdeas}
           className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
-          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
+          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
+          hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
         >
           Delete All
         </button>

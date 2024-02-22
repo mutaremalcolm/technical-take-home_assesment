@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { Idea } from '@/lib/types';
 import { v4 as uuidv4 } from 'uuid';
 import { MdDeleteForever } from "react-icons/md";
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -67,7 +67,6 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
       description: idea.description || '',
       content: idea.content || '',
     });
-
 
     if (localStorage.getItem('formSubmitted') === 'true') {
     setFormSubmitted(true);
@@ -143,12 +142,11 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
     return new Intl.DateTimeFormat('en-US', options).format(dateTime);
   };
   
-  
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)}
-    className={` form relative bg-gray-800 bg-opacity-90 rounded-lg shadow-md border border-clearScoreGrey p-4 mb-4 lg:w-1/4 
-          hover:shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105`} 
+    className={` form relative bg-gray-800 bg-opacity-90 rounded-lg shadow-md border border-clearScoreGrey 
+      p-4 mb-4 lg:w-1/4 hover:shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105`} 
       style={{ margin: '10px' }}
       >
        <div className="flex justify-between items-center mt-0 mb-2">
@@ -161,7 +159,8 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         <input
           {...register('title')}
           type="text"
-          className="bg-transparent font-bold text-lg mb-2 focus:outline-none focus:shadow-outline border-b-2 border-white w-full"
+          className="bg-transparent font-bold text-lg mb-2 focus:outline-none focus:shadow-outline 
+              border-b-2 border-white w-full"
           placeholder="Enter Title..."
           autoFocus
         />
@@ -188,16 +187,18 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
             <div>
               <button
                 onClick={onDelete}
-                className=" hover: transition-shadow absolute bottom-0 left-0 p-2 cursor-pointer text-bg-800 mr-2 text-4xl"
+                className=" hover: transition-shadow absolute bottom-0 left-0 p-2 cursor-pointer 
+                  text-bg-800 mr-2 text-4xl"
               >
                 <MdDeleteForever />
               </button> 
               <div>
               <button 
                 type="submit"
-                className={`absolute bottom-0 right-0 mr-4 p-2 hover:bg-gray-400 bg-white text-black border ${
-                  isSavedIdea && formSubmitted ? 'hover:bg-green-100' : 'hover:bg-white'
-                }text-black px-3 py-1 mb-2 rounded focus:outline-none focus:shadow-outline`}
+                className={`absolute bottom-0 right-0 mr-4 p-2 hover:bg-gray-400 bg-white
+                   text-black border ${isSavedIdea && formSubmitted ? 'hover:bg-green-100' : 
+                   'hover:bg-white'
+                  }text-black px-3 py-1 mb-2 rounded focus:outline-none focus:shadow-outline`}
               >
                  {isEditMode && formSubmitted ? 'Save' : 'Edit'}
               </button>

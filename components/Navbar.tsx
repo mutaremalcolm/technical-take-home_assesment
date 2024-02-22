@@ -10,7 +10,6 @@ const Navbar: React.FC<NavbarProps> = ({ onAddNewCard }) => {
       <div className="mb-2 md:mb-0">
         <p className="font-bold text-white text-2xl">Th!nkPad</p>
       </div>
-
       <button
         onClick={onAddNewCard}
         className="bg-gray text-white border border-white p-2 rounded hover:bg-gray-400"
