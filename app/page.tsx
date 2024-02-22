@@ -148,7 +148,7 @@ const handleSampleIdeas = () => {
     <>
       <Navigation onAddNewCard={handleAddNewCard} />
       <header className="flex flex-col items-center">
-        <div className="flex">
+        <div className="flex flex-wrap justify-center sm:justify-start">
         <button onClick={handleSampleIdeas} 
           className="bg-gray-800 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
           hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105
