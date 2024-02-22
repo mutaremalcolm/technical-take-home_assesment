@@ -6,7 +6,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onAddNewCard }) => {
   return (
-    <nav className="bg-gray-800 p-4 flex flex-col md:flex-row md:justify-between md:items-center border">
+    <nav className="bg-gray-800 bg-opacity-50 p-4 flex flex-col md:flex-row md:justify-between md:items-center border">
       <div className="mb-2 md:mb-0">
         <p className="font-bold text-white text-2xl">Th!nkPad</p>
       </div>

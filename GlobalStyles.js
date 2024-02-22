@@ -2,9 +2,7 @@
 import React from 'react';
 
 const GlobalStyles = () => (
-  <div className="bg-black font-sans text-gray-800">
-    {/* Add other global styles here */}
-  </div>
+  <div className="bg-black font-sans text-gray-800"></div>
 );
 
 export default GlobalStyles;
