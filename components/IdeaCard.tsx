@@ -145,7 +145,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)}
-    className={` form relative bg-gray-800 bg-opacity-90 rounded-lg shadow-md border border-clearScoreGrey 
+    className={` form relative  bg-opacity-50 rounded-lg shadow-md border border-clearScoreGrey 
       p-4 mb-4 lg:w-1/4 hover:shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105`} 
       style={{ margin: '10px' }}
       >
