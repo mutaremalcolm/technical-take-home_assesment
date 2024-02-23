@@ -74,10 +74,8 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
     }
   }, [idea, reset]);
 
-  // const isSavedIdea = !!localStorage.getItem("ideas")?.includes(idea.uuid);
-  const [isEditMode, setIsEditMode] = useState(!isSavedIdea);
+ const [isEditMode, setIsEditMode] = useState(!isSavedIdea);
   
-
  const onSubmit: SubmitHandler<Idea> = async (data) => {
     try {
       const updatedIdea: Idea = EditIdeaSchema.parse({
@@ -86,7 +84,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         title: data.title,
         description: data.description,
         content: data.content,
-        createdTime: new Date(data.createdTime), // Convert to Date object
+        createdTime: new Date(data.createdTime), 
         updatedTime: isEditMode ? new Date() : idea.updatedTime,
       });
 
@@ -146,7 +144,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
     <form onSubmit={handleSubmit(onSubmit)}
     className={` form relative  bg-opacity-50 rounded-lg shadow-md border border-clearScoreGrey 
       p-4 mb-4 lg:w-1/4 hover:shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105`} 
-      style={{ margin: '10px' }}
+      style={{ margin: '10px', padding: '20px' }}
       >
        <div className="flex justify-between items-center mt-0 mb-2">
           <p className=" text-gray-500 text-sm">
@@ -178,7 +176,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         />
         {errors.content && <span className="text-red-500">{errors.content.message}</span>}
       <div className="flex justify-between items-center lg:mr-2">
-        <p className="bg-transparent text-gray-500 text-sm ml-10 mt-10">
+        <p className="bg-transparent text-gray-500 text-sm ml-10 mt-10 ">
             Character Count: {charCount}/150
           </p>
         </div>
