@@ -41,7 +41,8 @@ export default function Home() {
     description: '',
     createdTime: currentDate,
     updatedTime: currentDate,
-    content: ''
+    content: '',
+    isNew: true,
   };
 
    setIdeas([...ideas, newCard]);
@@ -49,7 +50,7 @@ export default function Home() {
 
 const handleSave = (updatedIdea: Idea, index: number) => {
   const newIdeas = [...ideas];
-  newIdeas[index] = updatedIdea;
+  newIdeas[index] = {...updatedIdea, isNew: false };
   setIdeas(newIdeas);
   localStorage.setItem('ideas', JSON.stringify(newIdeas));
   if (ideas.length > 0) {

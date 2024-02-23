@@ -51,6 +51,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   const [formSubmitted, setFormSubmitted] = useState(
     localStorage.getItem('formSubmitted') === 'true' || false
   );
+  const isSavedIdea = !idea.isNew;
   
   const {
     register,
@@ -73,7 +74,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
     }
   }, [idea, reset]);
 
-  const isSavedIdea = !!localStorage.getItem("ideas")?.includes(idea.uuid);
+  // const isSavedIdea = !!localStorage.getItem("ideas")?.includes(idea.uuid);
   const [isEditMode, setIsEditMode] = useState(!isSavedIdea);
   
 
@@ -106,7 +107,6 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
 
       if (!isSavedIdea) {
         setIsEditMode(true);
-        console.log("Changing to Edit Mode");
       }
 
     } catch (error) {
@@ -126,7 +126,6 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   
   const formatDateTime = (dateTime: Date) => {
     if (!(dateTime instanceof Date) || isNaN(dateTime.getTime())) {
-      console.log(dateTime)
       return 'Invalid Date';
     }
   
@@ -196,7 +195,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
               <button 
                 type="submit"
                 className={`absolute bottom-0 right-0 mr-4 p-2 hover:bg-gray-400 bg-white
-                   text-black border ${isSavedIdea && formSubmitted ? 'hover:bg-green-100' : 
+                   text-black border ${isEditMode && formSubmitted ? 'hover:bg-green-100' : 
                    'hover:bg-white'
                   }text-black px-3 py-1 mb-2 rounded focus:outline-none focus:shadow-outline`}
               >
