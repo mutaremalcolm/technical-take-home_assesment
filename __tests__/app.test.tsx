@@ -25,11 +25,16 @@ test("tests the tester 2", () => {
 
 describe("Testing the 'Navbar' component", () => {
     test("Render Setup Check - 'Navbar'", () => {
+
+      // Arrange
       render(<Navbar onAddNewCard={function (): void {
           throw new Error("Function not implemented.");
       } } />);
+
+      // Act
       const NavbarTest = screen.getByText("Th!nkPad");
   
+      // Assert
       expect(NavbarTest).toBeInTheDocument();
     });
   });
