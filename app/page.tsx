@@ -56,7 +56,11 @@ export default function Home() {
     localStorage.setItem("ideas", JSON.stringify(newIdeas));
     if (ideas.length > 0) {
       toast.success("💡 Save Successful", {
-        position: "bottom-center",
+        position: 'top-center',
+        style: {
+          background: "transparent",
+          color: "#fff",
+        }
       });
     }
   };
@@ -68,7 +72,11 @@ export default function Home() {
     localStorage.removeItem("ideas");
     if (ideas.length > 0) {
       toast.success("🗑️ Delete Successful", {
-        position: "bottom-center",
+        position: 'top-center',
+        style: {
+          background: "transparent",
+          color: "#fff",
+        }
       });
     }
   };
@@ -78,7 +86,11 @@ export default function Home() {
     localStorage.removeItem("ideas");
     if (ideas.length > 0) {
       toast.success("🧹  Clear Successful", {
-        position: "bottom-center",
+        position: 'top-center',
+        style: {
+          background: "transparent",
+          color: "#fff",
+        }
       });
     }
   };
@@ -87,7 +99,11 @@ export default function Home() {
     setIdeas(sampleIdeas);
     localStorage.setItem("ideas", JSON.stringify(sampleIdeas));
     toast.success("🌟 Sample Ideas Added", {
-      position: "bottom-center",
+      position: 'top-center',
+        style: {
+          background: "transparent",
+          color: "#fff",
+        }
     });
   };
 
@@ -116,7 +132,11 @@ export default function Home() {
 
     if (ideas.length > 0) {
       toast.success(`🔄 Sort Successful`, {
-        position: 'bottom-center',
+        position: 'top-center',
+        style: {
+          background: "transparent",
+          color: "#fff",
+        }
       });
     }
   };
