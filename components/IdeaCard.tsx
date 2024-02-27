@@ -1,3 +1,6 @@
+//  COMPLETE REFACTOR - reveiw my version and also Will's 
+
+
 "use client";
 
 import * as z from "zod";
@@ -24,6 +27,7 @@ const EditIdeaSchema = z.object({
     .max(16, {
       message: "⚠ Title must not be longer than 16 characters.",
     })
+
     .default("Default Title"),
   description: z.string().optional(),
   content: z
@@ -53,13 +57,10 @@ interface IdeaCardProps {
 }
 
 const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
-  const [charCount, setCharCount] = useState(
-    idea.content ? idea.content.length : 0
-  );
-  const [formSubmitted, setFormSubmitted] = useState(
-    localStorage.getItem("formSubmitted") === "true" || false
-  );
+  const [charCount, setCharCount] = useState(0);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const isSavedIdea = !idea.isNew;
+  const [isEditMode, setIsEditMode] = useState(!isSavedIdea);
 
   const {
     register,
@@ -68,10 +69,10 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
     reset,
   } = useForm<EditIdeaSchemaType>({
     resolver: zodResolver(EditIdeaSchema),
-    mode: "onChange",
+    mode: "onChange",    
   });
 
-  useEffect(() => {
+  useEffect(() => {  
     reset({
       title: idea.title || "",
       description: idea.description || "",
@@ -82,8 +83,6 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
       setFormSubmitted(true);
     }
   }, [idea, reset]);
-
-  const [isEditMode, setIsEditMode] = useState(!isSavedIdea);
 
   const onSubmit: SubmitHandler<Idea> = async (data) => {
     try {
@@ -157,12 +156,10 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         style={{ margin: "10px", padding: "20px" }}
       >
         <div className="flex justify-between items-center mt-0 mb-2">
-          <p className=" text-gray-500 text-sm">
-            Updated:{" "}
-            {idea.createdTime ? formatDateTime(idea.createdTime) : "N/A"}
-            <br />
-            Created:{" "}
-            {idea.updatedTime ? formatDateTime(idea.updatedTime) : "N/A"}
+        <p className="text-white text-md">
+            {isEditMode && formSubmitted
+              ? `Updated: ${formatDateTime(idea.updatedTime || new Date())}`
+              : `Created: ${formatDateTime(idea.createdTime || new Date())}`}
           </p>
         </div>
         <div>
@@ -185,7 +182,10 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
             onChange={(e) => {
               const newContent = e.target.value;
               if (newContent.length <= 150) {
-                setCharCount(newContent.length);
+                // Use the existing content length if not in edit mode
+                setCharCount(
+                  isEditMode && formSubmitted ? newContent.length : idea.content?.length || 0
+                );
               }
             }}
           />
@@ -193,7 +193,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
             <span className="text-red-500">{errors.content.message}</span>
           )}
           <div className="flex justify-between items-center lg:mr-2">
-            <p className="bg-transparent text-gray-500 text-sm ml-10 mt-10 ">
+            <p className="bg-transparent text-white text-md ml-10 mt-10 ">
               Character Count: {charCount}/150
             </p>
           </div>
