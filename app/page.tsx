@@ -50,17 +50,17 @@ export default function Home() {
   };
 
   const handleSave = (updatedIdea: Idea, index: number) => {
-    const newIdeas: Idea[] = [...ideas]; 
+    const newIdeas: Idea[] = [...ideas];
     newIdeas[index] = { ...updatedIdea, isNew: false };
     setIdeas(newIdeas);
     localStorage.setItem("ideas", JSON.stringify(newIdeas));
     if (ideas.length > 0) {
       toast.success("💡 Save Successful", {
-        position: 'top-center',
+        position: "top-center",
         style: {
           background: "transparent",
           color: "#fff",
-        }
+        },
       });
     }
   };
@@ -72,11 +72,11 @@ export default function Home() {
     localStorage.removeItem("ideas");
     if (ideas.length > 0) {
       toast.success("🗑️ Delete Successful", {
-        position: 'top-center',
+        position: "top-center",
         style: {
           background: "transparent",
           color: "#fff",
-        }
+        },
       });
     }
   };
@@ -86,11 +86,11 @@ export default function Home() {
     localStorage.removeItem("ideas");
     if (ideas.length > 0) {
       toast.success("🧹  Clear Successful", {
-        position: 'top-center',
+        position: "top-center",
         style: {
           background: "transparent",
           color: "#fff",
-        }
+        },
       });
     }
   };
@@ -99,11 +99,11 @@ export default function Home() {
     setIdeas(sampleIdeas);
     localStorage.setItem("ideas", JSON.stringify(sampleIdeas));
     toast.success("🌟 Sample Ideas Added", {
-      position: 'top-center',
-        style: {
-          background: "transparent",
-          color: "#fff",
-        }
+      position: "top-center",
+      style: {
+        background: "transparent",
+        color: "#fff",
+      },
     });
   };
 
@@ -115,14 +115,22 @@ export default function Home() {
     let sortedIdeas = [...ideas];
 
     switch (sortType) {
-      case 'date':
-        sortedIdeas = sortedIdeas.sort((a, b) => new Date(a.createdTime).getTime() - new Date(b.createdTime).getTime());
+      case "date":
+        sortedIdeas = sortedIdeas.sort(
+          (a, b) =>
+            new Date(a.createdTime).getTime() -
+            new Date(b.createdTime).getTime()
+        );
         break;
-      case 'alph':
-        sortedIdeas = sortedIdeas.sort((a, b) => a.title.localeCompare(b.title));
+      case "alph":
+        sortedIdeas = sortedIdeas.sort((a, b) =>
+          a.title.localeCompare(b.title)
+        );
         break;
-      case 'alph_rev':
-        sortedIdeas = sortedIdeas.sort((a, b) => b.title.localeCompare(a.title));
+      case "alph_rev":
+        sortedIdeas = sortedIdeas.sort((a, b) =>
+          b.title.localeCompare(a.title)
+        );
         break;
       default:
         break;
@@ -132,11 +140,11 @@ export default function Home() {
 
     if (ideas.length > 0) {
       toast.success(`🔄 Sort Successful`, {
-        position: 'top-center',
+        position: "top-center",
         style: {
           background: "transparent",
           color: "#fff",
-        }
+        },
       });
     }
   };
@@ -145,6 +153,26 @@ export default function Home() {
     <>
       <Navigation onAddNewCard={handleAddNewCard} />
       <header className="flex flex-col items-center">
+      <button  onClick={handleAddNewCard} className="w-40 h-40 rounded-full border-5 border-solid bg-gray-500 border-white p-4 
+        bg-opacity-50 text-gray flex items-center justify-center hover:bg-gray100 transition-transform 
+        duration-300 transform focus:outline-none focus:ring focus:border-blue-300">
+            {/* You can add an icon or text inside the button */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-14 w-14"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              onClick={handleAddNewCard}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              />
+            </svg>
+          </button>
         <div className="flex flex-wrap justify-center sm:justify-start">
           <button
             onClick={handleSampleIdeas}
@@ -155,7 +183,10 @@ export default function Home() {
             Sample Ideas
           </button>
           <button
-            onClick={() => {setSortType('date'); handleSort(); }}
+            onClick={() => {
+              setSortType("date");
+              handleSort();
+            }}
             className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
           hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
           hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
@@ -163,15 +194,21 @@ export default function Home() {
             Sort By Date
           </button>
           <button
-            onClick={() => {setSortType('alph'); handleSort();}}
+            onClick={() => {
+              setSortType("alph");
+              handleSort();
+            }}
             className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
           hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
           hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
           >
-            Sort A-Z 
+            Sort A-Z
           </button>
           <button
-            onClick={() => {setSortType('alph_rev'); handleSort();}}
+            onClick={() => {
+              setSortType("alph_rev");
+              handleSort();
+            }}
             className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4  ml-3 font-bold
           hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
           hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
