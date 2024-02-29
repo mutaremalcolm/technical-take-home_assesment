@@ -4,6 +4,8 @@ import { Idea } from "@/lib/types";
 import { v4 as uuidv4 } from "uuid";
 import { sampleIdeas } from "@/lib/constants";
 import React, { useState, useEffect } from "react";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import toast from "react-hot-toast";
 import IdeaCard from "@/components/IdeaCard";
@@ -20,6 +22,7 @@ import {
 
 export default function Home() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
+  
 
   useEffect(() => {
     const savedIdeas = localStorage.getItem("ideas");
@@ -161,16 +164,16 @@ export default function Home() {
   return (
     <>
       <Navigation onAddNewCard={handleAddNewCard} />
-      <div className="bg-opacity-50 ml-10 mt-10">
-      <DropdownMenu>
+      <div className="flex flexDirection: row bg-opacity-50 mt-2 ml-10">
+        <DropdownMenu>
           <DropdownMenuTrigger
-            className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
+            className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-0 font-bold
           hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
           hover:scale-105 focus:outline-none focus:shadow-outline justify-center  border"
           >
-            Open
+            <FontAwesomeIcon icon={faBars} />
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent className="bg-opacity-50 text-white">
             <DropdownMenuLabel>Sort By</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -195,31 +198,16 @@ export default function Home() {
             >
               Sort Z-A
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={handleClearIdeas}
-              className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
-              hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
-              hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
-            >
-              Delete All
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={handleSampleIdeas}
-              className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
-              hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
-              hover:scale-105 focus:outline-none focus:shadow-outline justify-center  border"
-            >
-              Dummy Ideas
-            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        </div>
-      <header className="flex flex-col items-center">
+      </div>
+      <div className="flex justify-center items-center">
         <button
           onClick={handleAddNewCard}
-          className="w-40 h-40 rounded-full border-5 border-solid bg-gray-500 border-white p-4 
-        bg-opacity-50 text-gray flex items-center justify-center hover:bg-gray100 transition-transform 
-        duration-300 transform focus:outline-none focus:ring focus:border-blue-300"
+          autoFocus
+          className="w-40 h-40 rounded-full border-5 bg-white border-solid border-white p-4 
+        bg-opacity-50 text-gray flex items-center justify-center hover:bg-gray700 transition-transform 
+        duration-300 transform focus:outline-none focus:ring focus:border-white"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -237,6 +225,8 @@ export default function Home() {
             />
           </svg>
         </button>
+      </div>
+      <header className="flex flex-col items-center">
         <div className="bg-opacity-50 flex flex-wrap justify-center sm:justify-start"></div>
       </header>
       <main className="flex flex-wrap justify-around">

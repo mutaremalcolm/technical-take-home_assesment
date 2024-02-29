@@ -190,7 +190,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
             <span className="text-red-500">{errors.content.message}</span>
           )}
           <div className="flex justify-between items-center lg:mr-2">
-            <p className="bg-transparent text-white text-sl ml-10 mt-10 ">
+            <p className="bg-transparent text-white text-sm ml-10 mt-10 ">
               Character Count: {charCount}/150
             </p>
           </div>
