@@ -9,6 +9,15 @@ import toast from "react-hot-toast";
 import IdeaCard from "@/components/IdeaCard";
 import Navigation from "@/components/Navbar";
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 export default function Home() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
 
@@ -152,78 +161,83 @@ export default function Home() {
   return (
     <>
       <Navigation onAddNewCard={handleAddNewCard} />
-      <header className="flex flex-col items-center">
-      <button  onClick={handleAddNewCard} className="w-40 h-40 rounded-full border-5 border-solid bg-gray-500 border-white p-4 
-        bg-opacity-50 text-gray flex items-center justify-center hover:bg-gray100 transition-transform 
-        duration-300 transform focus:outline-none focus:ring focus:border-blue-300">
-            {/* You can add an icon or text inside the button */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-14 w-14"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              onClick={handleAddNewCard}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              />
-            </svg>
-          </button>
-        <div className="flex flex-wrap justify-center sm:justify-start">
-          <button
-            onClick={handleSampleIdeas}
+      <div className="bg-opacity-50 ml-10 mt-10">
+      <DropdownMenu>
+          <DropdownMenuTrigger
             className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
           hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
           hover:scale-105 focus:outline-none focus:shadow-outline justify-center  border"
           >
-            Sample Ideas
-          </button>
-          <button
-            onClick={() => {
-              setSortType("date");
-              handleSort();
-            }}
-            className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
-          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
-          hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
-          >
-            Sort By Date
-          </button>
-          <button
-            onClick={() => {
-              setSortType("alph");
-              handleSort();
-            }}
-            className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
-          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
-          hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
-          >
-            Sort A-Z
-          </button>
-          <button
-            onClick={() => {
-              setSortType("alph_rev");
-              handleSort();
-            }}
-            className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4  ml-3 font-bold
-          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
-          hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
-          >
-            Sort Z-A
-          </button>
-          <button
-            onClick={handleClearIdeas}
-            className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
-          hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
-          hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
-          >
-            Delete All
-          </button>
+            Open
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Sort By</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => {
+                setSortType("alph");
+                handleSort();
+              }}
+              className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
+              hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
+              hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
+            >
+              Sort A-Z
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                setSortType("alph_rev");
+                handleSort();
+              }}
+              className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4  ml-3 font-bold
+              hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
+              hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
+            >
+              Sort Z-A
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={handleClearIdeas}
+              className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4 ml-3 font-bold
+              hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
+              hover:scale-105bg-gray-400 focus:outline-none focus:shadow-outline justify-center border"
+            >
+              Delete All
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={handleSampleIdeas}
+              className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
+              hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
+              hover:scale-105 focus:outline-none focus:shadow-outline justify-center  border"
+            >
+              Dummy Ideas
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
         </div>
+      <header className="flex flex-col items-center">
+        <button
+          onClick={handleAddNewCard}
+          className="w-40 h-40 rounded-full border-5 border-solid bg-gray-500 border-white p-4 
+        bg-opacity-50 text-gray flex items-center justify-center hover:bg-gray100 transition-transform 
+        duration-300 transform focus:outline-none focus:ring focus:border-blue-300"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-14 w-14 margin "
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            onClick={handleAddNewCard}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
+          </svg>
+        </button>
+        <div className="bg-opacity-50 flex flex-wrap justify-center sm:justify-start"></div>
       </header>
       <main className="flex flex-wrap justify-around">
         {ideas.map((idea: Idea, index: number) => (
