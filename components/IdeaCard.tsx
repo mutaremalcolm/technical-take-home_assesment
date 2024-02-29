@@ -1,6 +1,3 @@
-//  COMPLETE REFACTOR - reveiw my version and also Will's 
-
-
 "use client";
 
 import * as z from "zod";
@@ -32,7 +29,7 @@ const EditIdeaSchema = z.object({
   description: z.string().optional(),
   content: z
     .string()
-    .max(150, { message: "⚠ Content must be less than 150 characters." })
+    .max(140, { message: "⚠ Content must be less than 140 characters." })
     .default("Default Content"),
   createdTime: z
     .date()
@@ -59,6 +56,7 @@ interface IdeaCardProps {
 const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   const [charCount, setCharCount] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isInputDisabled, setIsInputDisabled] = useState(false);
   const isSavedIdea = !idea.isNew;
   const [isEditMode, setIsEditMode] = useState(!isSavedIdea);
 
@@ -148,8 +146,8 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={` form relative  bg-opacity-50 rounded-lg shadow-md border border-clearScoreGrey 
-      p-4 mb-4 lg:w-1/4 hover:shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105`}
+        className={` form relative  bg-opacity-50 rounded-lg shadow-md border border-clearScoreGrey p-4 mb-4 mt-4 
+        lg:w-1/4 hover:shadow-lg transition-transform duration-300 transform hover:-translate-y-1 hover:scale-105`}
         style={{ margin: "10px", padding: "20px" }}
       >
         <div className="flex justify-between items-center mt-0 mb-2">
@@ -166,7 +164,13 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
             className="bg-transparent font-bold text-lg mb-2 focus:outline-none focus:shadow-outline 
               border-b-2 border-white w-full"
             placeholder="Enter Title..."
-            autoFocus
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+              }
+            }}
+            // autoFocus 
+            // TODO: Evaluate if its better to focus on title or on new ideaCard 
           />
           {errors.title && (
             <span className="text-red-500">{errors.title.message}</span>
@@ -178,20 +182,22 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
             placeholder="Enter Description Here...."
             onChange={(e) => {
               const newContent = e.target.value;
-              if (newContent.length <= 150) {
-                // Use the existing content length if not in edit mode
+              if (newContent.length <= 140) {
                 setCharCount(
                   isEditMode && formSubmitted ? newContent.length : idea.content?.length || 0
                 );
+              } else {
+                setIsInputDisabled(true);
               }
             }}
+            disabled={isInputDisabled}
           />
           {errors.content && (
             <span className="text-red-500">{errors.content.message}</span>
           )}
           <div className="flex justify-between items-center lg:mr-2">
             <p className="bg-transparent text-white text-sm ml-10 mt-10 ">
-              Character Count: {charCount}/150
+              Character Count: {charCount}/140
             </p>
           </div>
           <div>

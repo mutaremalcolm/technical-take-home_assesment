@@ -7,4 +7,5 @@ export interface Idea {
     createdTime: Date;  
     updatedTime: Date; 
     isNew?: boolean;   
+    
   }

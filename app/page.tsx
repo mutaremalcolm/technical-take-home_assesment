@@ -22,7 +22,6 @@ import {
 
 export default function Home() {
   const [ideas, setIdeas] = useState<Idea[]>([]);
-  
 
   useEffect(() => {
     const savedIdeas = localStorage.getItem("ideas");
@@ -70,7 +69,7 @@ export default function Home() {
       toast.success("💡 Save Successful", {
         position: "top-center",
         style: {
-          background: "transparent",
+          background: "black",
           color: "#fff",
         },
       });
@@ -86,37 +85,11 @@ export default function Home() {
       toast.success("🗑️ Delete Successful", {
         position: "top-center",
         style: {
-          background: "transparent",
+          background: "black",
           color: "#fff",
         },
       });
     }
-  };
-
-  const handleClearIdeas = () => {
-    setIdeas([]);
-    localStorage.removeItem("ideas");
-    if (ideas.length > 0) {
-      toast.success("🧹  Clear Successful", {
-        position: "top-center",
-        style: {
-          background: "transparent",
-          color: "#fff",
-        },
-      });
-    }
-  };
-
-  const handleSampleIdeas = () => {
-    setIdeas(sampleIdeas);
-    localStorage.setItem("ideas", JSON.stringify(sampleIdeas));
-    toast.success("🌟 Sample Ideas Added", {
-      position: "top-center",
-      style: {
-        background: "transparent",
-        color: "#fff",
-      },
-    });
   };
 
   const [sortType, setSortType] = useState<"" | "date" | "alph" | "alph_rev">(
@@ -154,7 +127,7 @@ export default function Home() {
       toast.success(`🔄 Sort Successful`, {
         position: "top-center",
         style: {
-          background: "transparent",
+          background: "black",
           color: "#fff",
         },
       });
@@ -205,9 +178,8 @@ export default function Home() {
         <button
           onClick={handleAddNewCard}
           autoFocus
-          className="w-40 h-40 rounded-full border-5 bg-white border-solid border-white p-4 
-        bg-opacity-50 text-gray flex items-center justify-center hover:bg-gray700 transition-transform 
-        duration-300 transform focus:outline-none focus:ring focus:border-white"
+          className="w-40 h-40 rounded-full border-5 border-solid border p-4 bg-opacity-50 text-gray flex items-center transition-transform duration-300 transform hover:-translate-y-1 
+          hover:scale-105 bg-gray-400 justify-center hover:bg-gray700 focus:outline-none focus:ring focus:border-white"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -215,7 +187,6 @@ export default function Home() {
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            onClick={handleAddNewCard}
           >
             <path
               strokeLinecap="round"
