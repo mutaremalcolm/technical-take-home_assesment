@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 body {
-    background-color: #222424; 
+    background-color: black; 
     font-family: 'Arial', sans-serif; 
     color: #fff; 
-    background-image: url('../public/images/clearScore_Background.png');
   }
+  
   
   

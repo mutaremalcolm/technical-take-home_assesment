@@ -5,6 +5,7 @@ export interface Idea {
     description?: string;
     content?: string;
     createdTime: Date;  
-    updatedTime: Date;  
-      
+    updatedTime: Date; 
+    isNew?: boolean;   
+    
   }

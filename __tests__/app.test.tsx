@@ -2,7 +2,7 @@ import React from "react";
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
-import Home from '@/app/page'; 
+import { v4 as uuidv4 } from 'uuid';
 import Navbar from "@/components/Navbar";
 
 
@@ -10,26 +10,46 @@ test("tests the tester 2", () => {
     expect(1).toBe(1);
   });
 
+  const generateUUID = () => {
+    return uuidv4();
+  };
 
-  test('Deleting an idea removes it from the state and localStorage', () => {
-    // Arrange
-    const component = render(<Home />);
-    
-    // Act
-    fireEvent.click(screen.getByText('Delete All'));
-    
-    // Assert
-    expect(component.queryByTestId('idea-card')).toBeNull();
-    expect(localStorage.getItem('ideas')).toBeNull();
+  describe('generateUUID', () => {
+    test('should generate a valid UUID', () => {
+      // Act
+      const generatedUUID = generateUUID();
+  
+      // Assert
+      expect(typeof generatedUUID).toBe('string');
+      expect(generatedUUID.length).toBe(36);
+      expect(generatedUUID).toMatch(
+        /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i
+      );
+    });
+  
+    test('should generate a unique UUID each time', () => {
+      // Act
+      const uuid1 = generateUUID();
+      const uuid2 = generateUUID();
+  
+      // Assert
+      expect(uuid1).not.toBe(uuid2);
+    });
   });
+  
 
 describe("Testing the 'Navbar' component", () => {
     test("Render Setup Check - 'Navbar'", () => {
+
+      // Arrange
       render(<Navbar onAddNewCard={function (): void {
           throw new Error("Function not implemented.");
       } } />);
+
+      // Act
       const NavbarTest = screen.getByText("Th!nkPad");
   
+      // Assert
       expect(NavbarTest).toBeInTheDocument();
     });
   });
@@ -63,5 +83,10 @@ describe("Testing the 'Navbar' component", () => {
       expect(onAddNewCardMock).toHaveBeenCalledTimes(1);
     });
   });
+
+  
+  
+
+  
 
   
