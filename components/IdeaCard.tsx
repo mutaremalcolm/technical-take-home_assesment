@@ -59,6 +59,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   const [isInputDisabled, setIsInputDisabled] = useState(false);
   const isSavedIdea = !idea.isNew;
   const [isEditMode, setIsEditMode] = useState(!isSavedIdea);
+  const [isTextareaFocused, setIsTextareaFocused] = useState(false);
 
   const {
     register,
@@ -67,10 +68,10 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
     reset,
   } = useForm<EditIdeaSchemaType>({
     resolver: zodResolver(EditIdeaSchema),
-    mode: "onChange",    
+    mode: "onChange",
   });
 
-  useEffect(() => {  
+  useEffect(() => {
     reset({
       title: idea.title || "",
       description: idea.description || "",
@@ -151,7 +152,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         style={{ margin: "10px", padding: "20px" }}
       >
         <div className="flex justify-between items-center mt-0 mb-2">
-        <p className="text-white text-md">
+          <p className="text-white text-md">
             {isEditMode && formSubmitted
               ? `Updated: ${formatDateTime(idea.updatedTime || new Date())}`
               : `Created: ${formatDateTime(idea.createdTime || new Date())}`}
@@ -165,12 +166,11 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
               border-b-2 border-white w-full"
             placeholder="Enter Title..."
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 e.preventDefault();
               }
             }}
-            // autoFocus 
-            // TODO: Evaluate if its better to focus on title or on new ideaCard 
+            // TODO: Evaluate if its better to focus on title or on new ideaCard
           />
           {errors.title && (
             <span className="text-red-500">{errors.title.message}</span>
@@ -180,11 +180,15 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
             {...register("content")}
             className="bg-transparent resize-none focus:outline-none focus:shadow-outline w-full"
             placeholder="Enter Description Here...."
+            onFocus={() => setIsTextareaFocused(true)}
+            onBlur={() => setIsTextareaFocused(false)}
             onChange={(e) => {
               const newContent = e.target.value;
               if (newContent.length <= 140) {
                 setCharCount(
-                  isEditMode && formSubmitted ? newContent.length : idea.content?.length || 0
+                  isEditMode && formSubmitted
+                    ? newContent.length
+                    : idea.content?.length || 0
                 );
               } else {
                 setIsInputDisabled(true);
@@ -212,14 +216,16 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
               <div>
                 <button
                   type="submit"
-                  className={`absolute bottom-0 right-0 mr-4 p-2 hover:bg-gray-400 bg-white
-                   text-black border ${
-                     isEditMode && formSubmitted
+                  className={`absolute bottom-0 right-0 mr-4 p-2 hover:bg-gray-400 bg-white text-black border 
+                  ${
+                    isTextareaFocused ? "hover:bg-gray-400 bg-white text-black" : "hidden"
+                  }
+                  ${ isEditMode && formSubmitted
                        ? "hover:bg-green-100"
                        : "hover:bg-white"
                    }text-black px-3 py-1 mb-2 rounded focus:outline-none focus:shadow-outline`}
                 >
-                  {isEditMode && formSubmitted ? "Save" : "Edit"}
+                  {isEditMode && formSubmitted ? "Save" : "Save"}
                 </button>
               </div>
             </div>
