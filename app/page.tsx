@@ -204,19 +204,16 @@ export default function Home() {
           </svg>
         </button>
       </div>
-      <header className="flex flex-col items-center">
-        <div className="bg-opacity-50 flex flex-wrap justify-center sm:justify-start"></div>
-      </header>
-      <main className="flex flex-wrap justify-around">
-        {ideas.map((idea: Idea, index: number) => (
-          <IdeaCard
-            key={idea.uuid}
-            idea={idea}
-            onDelete={() => handleDelete(index)}
-            onSave={(updatedIdea: Idea) => handleSave(updatedIdea, index)}
-          />
-        ))}
-      </main>
+        <main className="flex flex-wrap justify-around">
+          {ideas.map((idea: Idea, index: number) => (
+            <IdeaCard
+              key={idea.uuid}
+              idea={idea}
+              onDelete={() => handleDelete(index)}
+              onSave={(updatedIdea: Idea) => handleSave(updatedIdea, index)}
+            />
+          ))}
+        </main>
       <input
         type="text"
         style={{ opacity: 0, position: "absolute", zIndex: -1 }}
