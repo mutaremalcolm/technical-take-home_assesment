@@ -3,6 +3,25 @@
   <p>Welcome to ThinkPad, my solution for the technical take-home assessment – a powerful application I crafted to help you manage and organize your brilliant ideas!</p>
   <p>🔗 [Live Demo](https://technical-take-home-assesment.vercel.app/)</p>
 
+
+  <h3 align='center'>
+Tech Used in this Project
+<h3>
+<p align='center'>
+    <a href="https://skillicons.dev">
+        <img src="https://skillicons.dev/icons?i=ts,nextjs,tailwind" /><br>
+        <img src="https://skillicons.dev/icons?i=vercel,github,jest" />
+    </a>
+</p>
+
+<!-- Logo -->
+<div align=center>
+    <img src="/public/thinkPadDemo.png" alt="Demo" title="DemoImage" width="500" height="700">     
+   
+</div>
+
+
+
 ## Features
 
 - **Fully Responsive:**

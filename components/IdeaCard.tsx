@@ -29,7 +29,7 @@ const EditIdeaSchema = z.object({
   description: z.string().optional(),
   content: z
     .string()
-    .max(140, { message: "⚠ Content must be less than 140 characters." })
+    .max(140, { message: "⚠ Description must be less than 140 characters." })
     .default("Default Content"),
   createdTime: z
     .date()
@@ -57,8 +57,9 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
   const [charCount, setCharCount] = useState(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isInputDisabled, setIsInputDisabled] = useState(false);
-  const isSavedIdea = !idea.isNew;
-  const [isEditMode, setIsEditMode] = useState(!isSavedIdea);
+  const [isTextareaFocused, setIsTextareaFocused] = useState(false);
+  const [isEditMode, setIsEditMode] = useState();
+  
 
   const {
     register,
@@ -67,10 +68,10 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
     reset,
   } = useForm<EditIdeaSchemaType>({
     resolver: zodResolver(EditIdeaSchema),
-    mode: "onChange",    
+    mode: "onChange",
   });
 
-  useEffect(() => {  
+  useEffect(() => {
     reset({
       title: idea.title || "",
       description: idea.description || "",
@@ -91,7 +92,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         description: data.description,
         content: data.content,
         createdTime: new Date(data.createdTime),
-        updatedTime: isEditMode ? new Date() : idea.updatedTime,
+        updatedTime: new Date(data.updatedTime) 
       });
 
       setFormSubmitted(true);
@@ -110,9 +111,6 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         (storedIdea: Idea) => storedIdea.uuid === updatedIdea.uuid
       );
 
-      if (!isSavedIdea) {
-        setIsEditMode(true);
-      }
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error("Validation error:", error.errors);
@@ -151,8 +149,8 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
         style={{ margin: "10px", padding: "20px" }}
       >
         <div className="flex justify-between items-center mt-0 mb-2">
-        <p className="text-white text-md">
-            {isEditMode && formSubmitted
+          <p className="text-white text-md">
+            { isEditMode && formSubmitted
               ? `Updated: ${formatDateTime(idea.updatedTime || new Date())}`
               : `Created: ${formatDateTime(idea.createdTime || new Date())}`}
           </p>
@@ -165,12 +163,11 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
               border-b-2 border-white w-full"
             placeholder="Enter Title..."
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 e.preventDefault();
               }
             }}
-            // autoFocus 
-            // TODO: Evaluate if its better to focus on title or on new ideaCard 
+            // TODO: Evaluate if its better to focus on title or on new ideaCard
           />
           {errors.title && (
             <span className="text-red-500">{errors.title.message}</span>
@@ -180,11 +177,15 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
             {...register("content")}
             className="bg-transparent resize-none focus:outline-none focus:shadow-outline w-full"
             placeholder="Enter Description Here...."
+            onFocus={() => setIsTextareaFocused(true)}
+            onBlur={() => setIsTextareaFocused(false)}
             onChange={(e) => {
               const newContent = e.target.value;
               if (newContent.length <= 140) {
                 setCharCount(
-                  isEditMode && formSubmitted ? newContent.length : idea.content?.length || 0
+                  isEditMode && formSubmitted
+                    ? newContent.length
+                    : idea.content?.length || 0
                 );
               } else {
                 setIsInputDisabled(true);
@@ -204,7 +205,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
             <div>
               <button
                 onClick={onDelete}
-                className=" hover: transition-shadow absolute bottom-0 left-0 p-2 cursor-pointer 
+                className=" hover: transition-shadow text-color-red absolute bottom-0 left-0 p-2 cursor-pointer 
                   text-bg-800 mr-2 text-4xl"
               >
                 <MdDeleteForever />
@@ -212,14 +213,15 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onDelete, onSave }) => {
               <div>
                 <button
                   type="submit"
-                  className={`absolute bottom-0 right-0 mr-4 p-2 hover:bg-gray-400 bg-white
-                   text-black border ${
-                     isEditMode && formSubmitted
-                       ? "hover:bg-green-100"
-                       : "hover:bg-white"
-                   }text-black px-3 py-1 mb-2 rounded focus:outline-none focus:shadow-outline`}
+                  className={`absolute bottom-0 right-0 mr-4 p-2 hover:bg-gray-400 bg-white text-black border 
+                  ${
+                    isTextareaFocused
+                      ? "hover:bg-gray-400 bg-white text-black"
+                      : "hidden"
+                  }
+                  text-black px-3 py-1 mb-2 rounded focus:outline-none focus:shadow-outline`}
                 >
-                  {isEditMode && formSubmitted ? "Save" : "Edit"}
+                  {isEditMode && formSubmitted ? "Save" : "Save"}
                 </button>
               </div>
             </div>

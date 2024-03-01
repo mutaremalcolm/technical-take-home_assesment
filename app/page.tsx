@@ -2,7 +2,6 @@
 
 import { Idea } from "@/lib/types";
 import { v4 as uuidv4 } from "uuid";
-import { sampleIdeas } from "@/lib/constants";
 import React, { useState, useEffect } from "react";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -56,6 +55,14 @@ export default function Home() {
       content: "",
       isNew: true,
     };
+
+    toast.success("💡 Idea Created", {
+      position: "top-center",
+      style: {
+        background: "black",
+        color: "#fff",
+      },
+    });
 
     setIdeas([...ideas, newCard]);
   };
@@ -140,7 +147,7 @@ export default function Home() {
       <div className="flex flexDirection: row bg-opacity-50 mt-2 ml-10">
         <DropdownMenu>
           <DropdownMenuTrigger
-            className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-0 font-bold
+            className="bg-opacity-50 text-white p-2 mb-2 rounded text-sm mt-4 font-bold
           hover:bg-gray-400 shadow-lg transition-transform duration-300 transform hover:-translate-y-1 
           hover:scale-105 focus:outline-none focus:shadow-outline justify-center  border"
           >
@@ -197,19 +204,16 @@ export default function Home() {
           </svg>
         </button>
       </div>
-      <header className="flex flex-col items-center">
-        <div className="bg-opacity-50 flex flex-wrap justify-center sm:justify-start"></div>
-      </header>
-      <main className="flex flex-wrap justify-around">
-        {ideas.map((idea: Idea, index: number) => (
-          <IdeaCard
-            key={idea.uuid}
-            idea={idea}
-            onDelete={() => handleDelete(index)}
-            onSave={(updatedIdea: Idea) => handleSave(updatedIdea, index)}
-          />
-        ))}
-      </main>
+        <main className="flex flex-wrap justify-around">
+          {ideas.map((idea: Idea, index: number) => (
+            <IdeaCard
+              key={idea.uuid}
+              idea={idea}
+              onDelete={() => handleDelete(index)}
+              onSave={(updatedIdea: Idea) => handleSave(updatedIdea, index)}
+            />
+          ))}
+        </main>
       <input
         type="text"
         style={{ opacity: 0, position: "absolute", zIndex: -1 }}

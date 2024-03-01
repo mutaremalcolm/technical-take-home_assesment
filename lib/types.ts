@@ -6,6 +6,5 @@ export interface Idea {
     content?: string;
     createdTime: Date;  
     updatedTime: Date; 
-    isNew?: boolean;   
-    
+    isNew?: boolean;     
   }
