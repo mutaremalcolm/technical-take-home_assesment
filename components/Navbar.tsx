@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import { ModeToggle } from "../components/ui/ModeToggle";
 
 interface NavbarProps {
   onAddNewCard: () => void;
@@ -6,16 +7,19 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ onAddNewCard }) => {
   return (
-    <nav className="bg-gray-800 bg-opacity-50 p-4 flex flex-col md:flex-row md:justify-between md:items-center border">
-      <div className="mb-2 md:mb-0">
-        <p className="font-bold text-white text-2xl">Th!nkPad</p>
+    <nav className="bg-primary-foreground text-primary p-4 flex justify-between items-center border border-border">
+      <div>
+        <p className="font-bold text-2xl">Th!nkPad</p>
       </div>
-      <button
-        onClick={onAddNewCard}
-        className="bg-gray text-white border border-white p-2 rounded hover:bg-gray-400"
-      >
-        <p className="font-bold">+ Add new idea</p>
-      </button>
+      <div className="flex items-center space-x-4">
+        <button
+          onClick={onAddNewCard}
+          className="bg-primary text-primary-foreground border border-primary-foreground p-2 rounded hover:bg-primary/75"
+        >
+          <p className="font-bold">+ Add new idea</p>
+        </button>
+        <ModeToggle />
+      </div>
     </nav>
   );
 };
