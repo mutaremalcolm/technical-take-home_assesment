@@ -49,7 +49,6 @@ const NewIdeaModal = ({ addIdea }) => {
                         <Button onClick={() => setOpen(true)}>New Idea</Button>
                     </DialogTrigger>
                 </div>
-
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>New Idea</DialogTitle>

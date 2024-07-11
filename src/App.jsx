@@ -1,12 +1,15 @@
+
 import React, { useState } from 'react';
 import ButtonGradient from './assets/svg/ButtonGradient';
 import Header from './components/Header';
 import NewIdeaModal from './components/NewIdeaModal';
 import IdeaCard from './components/IdeaCard';
 
+
 const App = () => {
   const [ideas, setIdeas] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+
 
   const addIdea = (newIdea) => {
     setIdeas([...ideas, newIdea]);
@@ -36,6 +39,7 @@ const App = () => {
         {ideas.map((idea, index) => (
           <IdeaCard key={index} index={index} title={idea.title} description={idea.description} deleteIdea={deleteIdea} />
         ))}
+
       </div>
       <ButtonGradient />
     </>

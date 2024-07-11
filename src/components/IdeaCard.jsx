@@ -33,6 +33,7 @@ const IdeaCard = ({ index, title, description, deleteIdea }) => {
             {/* <CardFooter className="flex justify-end p-4">
                 <Button className="bg-blue-500 text-white py-2 px-4 rounded-md">Edit</Button>
             </CardFooter> */}
+
         </Card>
     );
 }
