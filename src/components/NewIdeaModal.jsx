@@ -11,7 +11,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-
 import Button from "./Button"
 import {
     Form as ShadcnForm,
@@ -23,32 +22,33 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-
-import React from 'react'
+import React, { useState } from 'react'
 
 const formSchema = z.object({
     title: z.string().min(1, "Title is required").max(40, "Keep Titles short and concise"),
-  description: z
-    .string()
-    .min(1, "Description is required")
-    .max(140, "Maximum of 140 characters"),
+    description: z.string().min(1, "Description is required").max(140, "Maximum of 140 characters")
 });
 
-const NewIdeaModal = () => {
+const NewIdeaModal = ({ addIdea }) => {
+    const [open, setOpen] = useState(false);
     const form = useForm({
         resolver: zodResolver(formSchema),
     });
 
     const onSubmit = (values) => {
-        console.log(values);
+        addIdea(values);
+        form.reset();
+        setOpen(false); // Close the modal
     };
 
     return (
         <>
-            <Dialog>
-                <DialogTrigger>
-                        <Button >New Idea</Button>
-                </DialogTrigger>
+            <Dialog open={open} onOpenChange={setOpen}>
+                <div className="flex flex-col items-center mt-5">
+                    <DialogTrigger>
+                        <Button onClick={() => setOpen(true)}>New Idea</Button>
+                    </DialogTrigger>
+                </div>
 
                 <DialogContent>
                     <DialogHeader>
@@ -63,32 +63,32 @@ const NewIdeaModal = () => {
                                 control={form.control}
                                 name="title"
                                 render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Title</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="Idea Title" {...field} />
-                                            </FormControl>
-                                            <FormDescription>
-                                                This is the name for your idea
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
+                                    <FormItem>
+                                        <FormLabel>Title</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Idea Title" {...field} />
+                                        </FormControl>
+                                        <FormDescription>
+                                            This is the name for your idea
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
                                 )}
                             />
                             <FormField
                                 control={form.control}
                                 name="description"
                                 render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Description</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="Description" {...field} />
-                                            </FormControl>
-                                            <FormDescription>
-                                                Enter your ideas here
-                                            </FormDescription>
-                                            <FormMessage />
-                                        </FormItem>
+                                    <FormItem>
+                                        <FormLabel>Description</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Description" {...field} />
+                                        </FormControl>
+                                        <FormDescription>
+                                            Enter your ideas here
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
                                 )}
                             />
                             <Button type="submit">Submit</Button>

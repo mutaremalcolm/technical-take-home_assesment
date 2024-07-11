@@ -18,9 +18,9 @@
 
 ---
 
-The project focuses on developing a gamified version of the 2-back task, a cognitive assessment used to measure working memory. In this task, users see a sequence of letters and must identify if the current letter matches the one shown two steps earlier.
+The project is my solution for the clearscore take home assesment project. The objective is to create an application that enables the creation of ideas by a user.
 
-I selected Next.js for its built-in routing capabilities and utilized a global React context to manage state across components. The game features a random letter generator that displays stimuli at set intervals. Additionally, I implemented error logging, simulated post requests, and added a toggle function to show event logs as toast notifications.
+I selected Vite for its speed, seamless integration with Vitest for testing and utilized a global React context to manage state across components. I also made use Shad/CN UI for the developement of a great UI. The application gives uses notifications on completion of certain processes, enables abilty to sort, edit and delete ideas as needed.
 
 <br/>
 
