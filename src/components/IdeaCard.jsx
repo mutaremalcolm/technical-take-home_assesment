@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import {
     Card,
@@ -96,5 +97,6 @@ const IdeaCard = ({ index, title, description, deleteIdea }) => {
         </Card>
     );
 };
+
 
 export default IdeaCard;

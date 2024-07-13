@@ -17,3 +17,4 @@ export const localData = {
       localStorage.removeItem(key);
   }
 };
+

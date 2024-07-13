@@ -16,7 +16,6 @@ import {
 const Header = ({ openModal }) => {
     const location = useLocation();
     const [openNavigation, setOpenNavigation] = useState(false);
-
     const toggleNavigation = () => {
         setOpenNavigation(!openNavigation);
     };
@@ -30,6 +29,7 @@ const Header = ({ openModal }) => {
             <div className="flex items-center px-5 lg:px-7.5 xl:px-10 max-lg:py-4">
                 <a className="block w-[12rem] xl:mr-8" href="#hero">
                     <h1 className="font-code text-3xl uppercase text-n-1 transition-colors hover:text-color-1">ClearScore</h1>
+
                 </a>
                 <nav className={`${openNavigation ? 'flex' : 'hidden'} fixed top-[5rem] left-0 right-0 bottom-0 bg-n-8 lg:static lg:flex lg:mx-auto lg:bg-transparent`}>
                     <div className="relative z-2 flex flex-col items-center justify-center m-auto lg:flex-row">

@@ -5,6 +5,7 @@ import NewIdeaModal from './components/NewIdeaModal';
 import IdeaCard from './components/IdeaCard';
 import { localData } from './lib/utils'; 
 
+
 const App = () => {
   const [ideas, setIdeas] = useState(() => localData.get('ideas') || []);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,6 +13,7 @@ const App = () => {
   useEffect(() => {
     localData.set('ideas', ideas);
   }, [ideas]);
+
 
   const deleteIdea = (index) => {
     const updatedIdeas = ideas.filter((_, i) => i !== index);
@@ -31,6 +33,7 @@ const App = () => {
     setIsModalOpen(false); // Close the modal after adding the idea
   };
 
+
   return (
     <>
       <div className='pt-[4.75rem] lg:pt-[5.25rem] overflow-hidden'>
@@ -41,6 +44,7 @@ const App = () => {
         {ideas.map((idea, index) => (
           <IdeaCard key={index} index={index} title={idea.title} description={idea.description} deleteIdea={deleteIdea} />
         ))}
+
       </div>
       <ButtonGradient />
     </>
