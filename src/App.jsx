@@ -3,24 +3,14 @@ import ButtonGradient from './assets/svg/ButtonGradient';
 import Header from './components/Header';
 import NewIdeaModal from './components/NewIdeaModal';
 import IdeaCard from './components/IdeaCard';
+import { localData } from './lib/utils'; 
 
 const App = () => {
-  const [ideas, setIdeas] = useState([]);
+  const [ideas, setIdeas] = useState(() => localData.get('ideas') || []);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Read from localStorage when the component mounts
   useEffect(() => {
-    const storedIdeas = localStorage.getItem('ideas');
-    console.log('Retrieved from localStorage:', storedIdeas); // Log to verify
-    if (storedIdeas) {
-      setIdeas(JSON.parse(storedIdeas));
-    }
-  }, []);
-
-  // Save to localStorage whenever the ideas array changes
-  useEffect(() => {
-    console.log('Saving to localStorage:', ideas); // Log to verify
-    localStorage.setItem('ideas', JSON.stringify(ideas));
+    localData.set('ideas', ideas);
   }, [ideas]);
 
   const deleteIdea = (index) => {
