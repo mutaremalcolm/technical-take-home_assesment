@@ -9,7 +9,6 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 import Button from "./Button"
 import {
@@ -22,80 +21,79 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import React, { useState } from 'react'
+import React from 'react'
+
 
 const formSchema = z.object({
     title: z.string().min(1, "Title is required").max(40, "Keep Titles short and concise"),
     description: z.string().min(1, "Description is required").max(140, "Maximum of 140 characters")
 });
 
-const NewIdeaModal = ({ addIdea }) => {
-    const [open, setOpen] = useState(false);
+const NewIdeaModal = ({ isOpen, addIdea, closeModal }) => {
     const form = useForm({
         resolver: zodResolver(formSchema),
     });
 
     const onSubmit = (values) => {
-        addIdea(values);
+        addIdea(values); // Pass form values to addIdea
         form.reset();
-        setOpen(false); // Close the modal
+        closeModal(); // Close the modal
     };
 
     return (
-        <>
-            <Dialog open={open} onOpenChange={setOpen}>
-                <div className="flex flex-col items-center mt-5">
-                    <DialogTrigger>
-                        <Button onClick={() => setOpen(true)}>New Idea</Button>
-                    </DialogTrigger>
-                </div>
-                <DialogContent>
-                    <DialogHeader>
+        <Dialog open={isOpen} onOpenChange={closeModal}>
+            <DialogContent>
+                <DialogHeader>
+                    <div className="flex flex-col items-center mb-2">
                         <DialogTitle>New Idea</DialogTitle>
+                    </div>
+                    <div className="flex flex-col items-center">
                         <DialogDescription>
                             Please enter your idea details below.
                         </DialogDescription>
-                    </DialogHeader>
-                    <ShadcnForm {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                            <FormField
-                                control={form.control}
-                                name="title"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Title</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Idea Title" {...field} />
-                                        </FormControl>
-                                        <FormDescription>
-                                            This is the name for your idea
-                                        </FormDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="description"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Description</FormLabel>
-                                        <FormControl>
-                                            <Input placeholder="Description" {...field} />
-                                        </FormControl>
-                                        <FormDescription>
-                                            Enter your ideas here
-                                        </FormDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                    </div>
+                </DialogHeader>
+                <ShadcnForm {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <FormField
+                            control={form.control}
+                            name="title"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Title</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Enter Title Here" {...field} />
+                                    </FormControl>
+                                    <FormDescription>
+                                        This is the name for your idea
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="description"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Description</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder=" Enter Description" {...field} />
+                                    </FormControl>
+                                    <FormDescription>
+                                        Enter your ideas here
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <div className="flex flex-col items-center">
                             <Button type="submit">Submit</Button>
-                        </form>
-                    </ShadcnForm>
-                </DialogContent>
-            </Dialog>
-        </>
+                        </div>
+                    </form>
+                </ShadcnForm>
+            </DialogContent>
+        </Dialog>
     )
 }
 

@@ -8,7 +8,7 @@
     {
       id: "1",
       title: "Github",
-      url: "https://github.com/mutaremalcolm",
+      url: "https://github.com/mutaremalcolm/technical-take-home_assesment",
     },
     {
       id: "2",
