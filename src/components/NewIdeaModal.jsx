@@ -1,8 +1,13 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { z } from "zod";
+import React from "react";
+import Button from "./Button";
+import { v4 as uuidv4 } from 'uuid';
+import { useForm } from "react-hook-form";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
     Dialog,
     DialogContent,
@@ -10,7 +15,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import Button from "./Button"
+
 import {
     Form as ShadcnForm,
     FormControl,
@@ -20,8 +25,8 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import React from 'react'
+
+
 
 const formSchema = z.object({
     title: z.string().min(1, "Title is required").max(40, "Keep Titles short and concise"),
@@ -34,26 +39,27 @@ const NewIdeaModal = ({ isOpen, addIdea, closeModal }) => {
     });
 
     const onSubmit = (values) => {
-        addIdea(values); // Pass form values to addIdea
+        const newIdea = {
+            id: uuidv4(),
+            ...values,
+            date: new Date().toISOString(),
+        };
+        addIdea(newIdea); // Pass form values to addIdea
         form.reset();
         closeModal(); // Close the modal
     };
 
     return (
         <Dialog open={isOpen} onOpenChange={closeModal}>
-            <DialogContent>
-                <DialogHeader>
-                    <div className="flex flex-col items-center mb-2">
-                        <DialogTitle>New Idea</DialogTitle>
-                    </div>
-                    <div className="flex flex-col items-center">
-                        <DialogDescription>
-                            Please enter your idea details below.
-                        </DialogDescription>
-                    </div>
+            <DialogContent className="p-4 sm:p-6 sm:mx-4 md:mx-8 lg:mx-16 xl:mx-32">
+                <DialogHeader className="flex flex-col items-center mb-2">
+                    <DialogTitle>New Idea</DialogTitle>
+                    <DialogDescription>
+                        Please enter your idea details below.
+                    </DialogDescription>
                 </DialogHeader>
                 <ShadcnForm {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-8">
                         <FormField
                             control={form.control}
                             name="title"
@@ -61,7 +67,7 @@ const NewIdeaModal = ({ isOpen, addIdea, closeModal }) => {
                                 <FormItem>
                                     <FormLabel>Title</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter Title Here" {...field} />
+                                        <Input autoFocus placeholder="Enter Title Here" {...field} />
                                     </FormControl>
                                     <FormDescription>
                                         This is the name for your idea
@@ -77,7 +83,7 @@ const NewIdeaModal = ({ isOpen, addIdea, closeModal }) => {
                                 <FormItem>
                                     <FormLabel>Description</FormLabel>
                                     <FormControl>
-                                        <Input placeholder=" Enter Description" {...field} />
+                                        <Input placeholder="Enter Description" {...field} />
                                     </FormControl>
                                     <FormDescription>
                                         Enter your ideas here
@@ -86,7 +92,7 @@ const NewIdeaModal = ({ isOpen, addIdea, closeModal }) => {
                                 </FormItem>
                             )}
                         />
-                        <div className="flex flex-col items-center">
+                        <div className="flex justify-center">
                             <Button type="submit">Submit</Button>
                         </div>
                     </form>
