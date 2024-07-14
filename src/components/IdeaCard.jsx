@@ -29,6 +29,7 @@ const IdeaCard = ({ id, title, description, deleteIdea }) => {
 
     const handleTitleChange = (event) => {
         setEditableTitle(event.target.value);
+
         setIsEdited(true);
     };
 

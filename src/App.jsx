@@ -1,4 +1,3 @@
-
 import { localData } from './lib/utils';
 import { sortIdeas } from './lib/utils';
 
@@ -61,5 +60,6 @@ const App = () => {
         </>
     );
 };
+
 
 export default App;
