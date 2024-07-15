@@ -26,8 +26,6 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 
-
-
 const formSchema = z.object({
     title: z.string().min(1, "Title is required").max(40, "Keep Titles short and concise"),
     description: z.string().min(1, "Description is required").max(140, "Maximum of 140 characters")

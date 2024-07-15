@@ -8,7 +8,6 @@ import NewIdeaModal from './components/NewIdeaModal';
 import ButtonGradient from './assets/svg/ButtonGradient';
 
 const App = () => {
-
     const localData = {
         set(key, value) {
           localStorage.setItem(key, JSON.stringify(value));

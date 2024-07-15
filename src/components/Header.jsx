@@ -48,6 +48,7 @@ const Header = ({ openModal, handleSort }) => {
                         ))}
                     </div>
                 </nav>
+
                 <a href="https://vercel.com/mutaremalcolms-projects/vite-typescript-portfolio"
                     className="hidden lg:block button mr-8 text-n-1/50 transition-colors hover:text-n-1">
                     Personal Portfolio
