@@ -1,5 +1,3 @@
-
-import { localData } from './lib/utils';
 import { sortIdeas } from './lib/utils';
 
 import Header from './components/Header';
@@ -9,10 +7,21 @@ import React, { useState, useEffect } from 'react';
 import NewIdeaModal from './components/NewIdeaModal';
 import ButtonGradient from './assets/svg/ButtonGradient';
 
-
-
-
 const App = () => {
+
+    const localData = {
+        set(key, value) {
+          localStorage.setItem(key, JSON.stringify(value));
+        },
+        get(key) {
+          const stored = localStorage.getItem(key);
+          return stored == null ? undefined : JSON.parse(stored);
+        },
+        remove(key) {
+          localStorage.removeItem(key);
+        }
+      };
+
     const [ideas, setIdeas] = useState(() => localData.get('ideas') || []);
     const [isModalOpen, setIsModalOpen] = useState(false);
 

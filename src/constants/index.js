@@ -20,18 +20,6 @@
       title: "Instagram",
       url: "https://www.instagram.com/malcolmfullstack/?igsh=cmdpdTRmdzN3eXh5",
     },
-    {
-      id: "4",
-      title: "",
-      url: "#signup",
-      onlyMobile: true,
-    },
-    {
-      id: "5",
-      title: "Sign in",
-      url: "#login",
-      onlyMobile: true,
-    },
   ];
   
   

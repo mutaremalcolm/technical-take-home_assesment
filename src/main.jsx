@@ -10,8 +10,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
   <React.StrictMode>
     <Router>
-        <App />
-        <Toaster />
+      <App />
+      <Toaster
+        position="bottom-center"
+      />
     </Router>
   </React.StrictMode>,
 )
