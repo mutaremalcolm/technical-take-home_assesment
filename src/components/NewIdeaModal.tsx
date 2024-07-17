@@ -1,10 +1,8 @@
-"use client"
-
 import { z } from "zod";
-import React from "react";
+import React, { FC } from "react";
 import Button from "./Button";
-import { v4 as uuidv4 } from 'uuid';
-import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -14,7 +12,7 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
 import {
     Form as ShadcnForm,
@@ -24,29 +22,42 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 
+interface NewIdea {
+    id: string;
+    title: string;
+    description: string;
+    date: string;
+}
 
+interface NewIdeaModalProps {
+    isOpen: boolean;
+    addIdea: (idea: NewIdea) => void;
+    closeModal: () => void;
+}
 
 const formSchema = z.object({
     title: z.string().min(1, "Title is required").max(40, "Keep Titles short and concise"),
-    description: z.string().min(1, "Description is required").max(140, "Maximum of 140 characters")
+    description: z.string().min(1, "Description is required").max(140, "Maximum of 140 characters"),
 });
 
-const NewIdeaModal = ({ isOpen, addIdea, closeModal }) => {
+const NewIdeaModal: FC<NewIdeaModalProps> = ({ isOpen, addIdea, closeModal }) => {
     const form = useForm({
         resolver: zodResolver(formSchema),
     });
 
-    const onSubmit = (values) => {
-        const newIdea = {
+    const onSubmit: SubmitHandler<FieldValues> = (values) => {
+        const newIdea: NewIdea = {
             id: uuidv4(),
             ...values,
             date: new Date().toISOString(),
+            title: "",
+            description: ""
         };
-        addIdea(newIdea); // Pass form values to addIdea
+        addIdea(newIdea);
         form.reset();
-        closeModal(); // Close the modal
+        closeModal();
     };
 
     return (
@@ -99,7 +110,7 @@ const NewIdeaModal = ({ isOpen, addIdea, closeModal }) => {
                 </ShadcnForm>
             </DialogContent>
         </Dialog>
-    )
-}
+    );
+};
 
 export default NewIdeaModal;

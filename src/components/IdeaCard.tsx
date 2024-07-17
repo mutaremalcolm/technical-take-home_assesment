@@ -1,7 +1,5 @@
 import { Trash } from "lucide-react";
-
-import React, { useState } from 'react';
-
+import React, { FC, useState } from 'react';
 import {
     Card,
     CardDescription,
@@ -9,15 +7,20 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 
+interface IdeaCardProps {
+    id: string;
+    title: string;
+    description: string;
+    deleteIdea: (id: string) => void;
+}
 
-const IdeaCard = ({ id, title, description, deleteIdea }) => {
-    // TODo: refactor useState to a useReducer instead
-    const [editableTitle, setEditableTitle] = useState(title);
-    const [editableDescription, setEditableDescription] = useState(description);
-    const [isEditingTitle, setIsEditingTitle] = useState(false);
-    const [isEditingDescription, setIsEditingDescription] = useState(false);
-    const [charCount, setCharCount] = useState(description.length);
-    const [isEdited, setIsEdited] = useState(false);
+const IdeaCard: FC<IdeaCardProps> = ({ id, title, description, deleteIdea }) => {
+    const [editableTitle, setEditableTitle] = useState<string>(title);
+    const [editableDescription, setEditableDescription] = useState<string>(description);
+    const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
+    const [isEditingDescription, setIsEditingDescription] = useState<boolean>(false);
+    const [charCount, setCharCount] = useState<number>(description.length);
+    const [isEdited, setIsEdited] = useState<boolean>(false);
 
     const handleTitleClick = () => {
         setIsEditingTitle(true);
@@ -27,12 +30,12 @@ const IdeaCard = ({ id, title, description, deleteIdea }) => {
         setIsEditingDescription(true);
     };
 
-    const handleTitleChange = (event) => {
+    const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEditableTitle(event.target.value);
         setIsEdited(true);
     };
 
-    const handleDescriptionChange = (event) => {
+    const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newDescription = event.target.value;
         setEditableDescription(newDescription);
         setCharCount(newDescription.length);
@@ -47,7 +50,7 @@ const IdeaCard = ({ id, title, description, deleteIdea }) => {
         setIsEditingDescription(false);
     };
 
-    const handleDeleteClick = () => {
+    const handleDeleteClick = (): void => {
         deleteIdea(id);
     };
 

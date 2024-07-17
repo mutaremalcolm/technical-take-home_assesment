@@ -1,3 +1,5 @@
+import  React from 'react';
+
 const ButtonGradient = () => {
   return (
     <svg className="block" width={0} height={0}>
