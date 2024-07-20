@@ -1,19 +1,21 @@
-import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-
+// utils.ts
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: Array<string | undefined | null | false>): string {
   return twMerge(clsx(inputs));
 }
 
 // Define the type for an idea object
-interface Idea {
+export interface Idea {
+  id: string;
   title: string;
+  description: string;
   date: string;
 }
 
 // Define the type for the sortIdeas function parameters and return type
-export const sortIdeas = (ideas: Idea[], sortType: string): Idea[] =>  {
+export const sortIdeas = (ideas: Idea[], sortType: string): Idea[] => {
   switch (sortType) {
     case 'A-Z':
       return [...ideas].sort((a, b) => a.title.localeCompare(b.title));

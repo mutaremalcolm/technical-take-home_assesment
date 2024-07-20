@@ -55,7 +55,7 @@ const IdeaCard: FC<IdeaCardProps> = ({ id, title, description, deleteIdea }) => 
     };
 
     return (
-        <Card className="idea-card w-full max-w-[24rem] mt-5 sm:mt-10 mx-auto sm:ml-5 border border-gray-200 shadow-md rounded-md">
+        <Card className={`idea-card w-full max-w-[24rem] mt-5 sm:mt-10 mx-auto sm:ml-5 border border-gray-200 shadow-md rounded-md`}>
             <div className="flex flex-row justify-between p-4">
                 <p className="text-xs text-gray-500">
                     {isEdited ? 'Updated' : 'Created'}: {new Date().toLocaleDateString()}

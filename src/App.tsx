@@ -1,16 +1,10 @@
-import { sortIdeas } from './lib/utils';
+import { sortIdeas, Idea } from './lib/utils';
 import Header from './components/Header';
 import IdeaCard from './components/IdeaCard';
 import toast from 'react-hot-toast';
 import React, { useState, useEffect } from 'react';
 import NewIdeaModal from './components/NewIdeaModal';
 import ButtonGradient from './assets/svg/ButtonGradient';
-
-interface Idea {
-    id: string;
-    title: string;
-    description: string;
-}
 
 interface LocalData {
     set(key: string, value: any): void;

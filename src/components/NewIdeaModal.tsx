@@ -50,10 +50,9 @@ const NewIdeaModal: FC<NewIdeaModalProps> = ({ isOpen, addIdea, closeModal }) =>
     const onSubmit: SubmitHandler<FieldValues> = (values) => {
         const newIdea: NewIdea = {
             id: uuidv4(),
-            ...values,
+            title: values.title, 
+            description: values.description,
             date: new Date().toISOString(),
-            title: "",
-            description: ""
         };
         addIdea(newIdea);
         form.reset();
@@ -63,14 +62,14 @@ const NewIdeaModal: FC<NewIdeaModalProps> = ({ isOpen, addIdea, closeModal }) =>
     return (
         <Dialog open={isOpen} onOpenChange={closeModal}>
             <DialogContent className="p-4 sm:p-6 sm:mx-4 md:mx-8 lg:mx-16 xl:mx-32">
-                <DialogHeader className="flex flex-col items-center mb-2">
-                    <DialogTitle>New Idea</DialogTitle>
-                    <DialogDescription>
+                <DialogHeader className="flex flex-col items-center mb-4">
+                    <DialogTitle className="text-lg font-semibold">New Idea</DialogTitle>
+                    <DialogDescription className="text-sm">
                         Please enter your idea details below.
                     </DialogDescription>
                 </DialogHeader>
                 <ShadcnForm {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-8">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                         <FormField
                             control={form.control}
                             name="title"
@@ -78,12 +77,12 @@ const NewIdeaModal: FC<NewIdeaModalProps> = ({ isOpen, addIdea, closeModal }) =>
                                 <FormItem>
                                     <FormLabel>Title</FormLabel>
                                     <FormControl>
-                                        <Input autoFocus placeholder="Enter Title Here" {...field} />
+                                        <Input className="w-full" autoFocus placeholder="Enter Title Here" {...field} />
                                     </FormControl>
                                     <FormDescription>
                                         This is the name for your idea
                                     </FormDescription>
-                                    <FormMessage />
+                                    <FormMessage className="text-red-500" />
                                 </FormItem>
                             )}
                         />
@@ -94,12 +93,12 @@ const NewIdeaModal: FC<NewIdeaModalProps> = ({ isOpen, addIdea, closeModal }) =>
                                 <FormItem>
                                     <FormLabel>Description</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter Description" {...field} />
+                                        <Input className="w-full" placeholder="Enter Description" {...field} />
                                     </FormControl>
                                     <FormDescription>
                                         Enter your ideas here
                                     </FormDescription>
-                                    <FormMessage />
+                                    <FormMessage className="text-red-500" />
                                 </FormItem>
                             )}
                         />
