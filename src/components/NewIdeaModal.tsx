@@ -1,10 +1,8 @@
-"use client"
-
 import { z } from "zod";
-import React from "react";
+import React, { FC } from "react";
 import Button from "./Button";
-import { v4 as uuidv4 } from 'uuid';
-import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -14,7 +12,7 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
 import {
     Form as ShadcnForm,
@@ -24,42 +22,54 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 
+interface NewIdea {
+    id: string;
+    title: string;
+    description: string;
+    date: string;
+}
 
+interface NewIdeaModalProps {
+    isOpen: boolean;
+    addIdea: (idea: NewIdea) => void;
+    closeModal: () => void;
+}
 
 const formSchema = z.object({
     title: z.string().min(1, "Title is required").max(40, "Keep Titles short and concise"),
-    description: z.string().min(1, "Description is required").max(140, "Maximum of 140 characters")
+    description: z.string().min(1, "Description is required").max(140, "Maximum of 140 characters"),
 });
 
-const NewIdeaModal = ({ isOpen, addIdea, closeModal }) => {
+const NewIdeaModal: FC<NewIdeaModalProps> = ({ isOpen, addIdea, closeModal }) => {
     const form = useForm({
         resolver: zodResolver(formSchema),
     });
 
-    const onSubmit = (values) => {
-        const newIdea = {
+    const onSubmit: SubmitHandler<FieldValues> = (values) => {
+        const newIdea: NewIdea = {
             id: uuidv4(),
-            ...values,
+            title: values.title, 
+            description: values.description,
             date: new Date().toISOString(),
         };
-        addIdea(newIdea); // Pass form values to addIdea
+        addIdea(newIdea);
         form.reset();
-        closeModal(); // Close the modal
+        closeModal();
     };
 
     return (
         <Dialog open={isOpen} onOpenChange={closeModal}>
             <DialogContent className="p-4 sm:p-6 sm:mx-4 md:mx-8 lg:mx-16 xl:mx-32">
-                <DialogHeader className="flex flex-col items-center mb-2">
-                    <DialogTitle>New Idea</DialogTitle>
-                    <DialogDescription>
+                <DialogHeader className="flex flex-col items-center mb-4">
+                    <DialogTitle className="text-lg font-semibold">New Idea</DialogTitle>
+                    <DialogDescription className="text-sm">
                         Please enter your idea details below.
                     </DialogDescription>
                 </DialogHeader>
                 <ShadcnForm {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-8">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                         <FormField
                             control={form.control}
                             name="title"
@@ -67,12 +77,12 @@ const NewIdeaModal = ({ isOpen, addIdea, closeModal }) => {
                                 <FormItem>
                                     <FormLabel>Title</FormLabel>
                                     <FormControl>
-                                        <Input autoFocus placeholder="Enter Title Here" {...field} />
+                                        <Input className="w-full" autoFocus placeholder="Enter Title Here" {...field} />
                                     </FormControl>
                                     <FormDescription>
                                         This is the name for your idea
                                     </FormDescription>
-                                    <FormMessage />
+                                    <FormMessage className="text-red-500" />
                                 </FormItem>
                             )}
                         />
@@ -83,12 +93,12 @@ const NewIdeaModal = ({ isOpen, addIdea, closeModal }) => {
                                 <FormItem>
                                     <FormLabel>Description</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter Description" {...field} />
+                                        <Input className="w-full" placeholder="Enter Description" {...field} />
                                     </FormControl>
                                     <FormDescription>
                                         Enter your ideas here
                                     </FormDescription>
-                                    <FormMessage />
+                                    <FormMessage className="text-red-500" />
                                 </FormItem>
                             )}
                         />
@@ -99,7 +109,7 @@ const NewIdeaModal = ({ isOpen, addIdea, closeModal }) => {
                 </ShadcnForm>
             </DialogContent>
         </Dialog>
-    )
-}
+    );
+};
 
 export default NewIdeaModal;

@@ -55,11 +55,11 @@ const Header = ({ openModal, handleSort }) => {
                 <button className="flex items-center mr-5 lg:mr-15 font-code text-n-1 transition-colors
                  hover:text-color-1">
                     <DropdownMenu>
-                        <DropdownMenuTrigger className="flex items-center space-x-2 bg-n-8/90">
+                        <DropdownMenuTrigger className="flex items-center space-x-2 bg-n-/90">
                             <Logs />
                             <span>Sort</span>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent>
+                        <DropdownMenuContent className="bg-n-6"> 
                             <DropdownMenuLabel>Sort Ideas</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={() => handleSort('A-Z')}>Sort A-Z</DropdownMenuItem>
