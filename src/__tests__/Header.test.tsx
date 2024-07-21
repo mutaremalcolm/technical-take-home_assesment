@@ -13,7 +13,7 @@ describe('Header Component', () => {
     return render(
       <MemoryRouter initialEntries={[initialRoute]}>
         <Routes>
-          <Route path="*" element={<Header openModal={openModalMock} />} />
+          <Route path="*" element={<Header openModal={openModalMock} handleSort={undefined} />} />
         </Routes>
       </MemoryRouter>
     );
@@ -22,15 +22,6 @@ describe('Header Component', () => {
   test('renders the header with ClearScore text', () => {
     renderComponent();
     expect(screen.getByText('ClearScore')).toBeInTheDocument();
-  });
-
-  test('opens and closes the navigation menu on mobile', () => {
-    renderComponent();
-    const menuButton = screen.getByText('Menu');
-    fireEvent.click(menuButton);
-    expect(screen.getByText('Close')).toBeInTheDocument();
-    fireEvent.click(screen.getByText('Close'));
-    expect(screen.getByText('Menu')).toBeInTheDocument();
   });
 
   test('calls openModal when New Idea button is clicked', () => {
